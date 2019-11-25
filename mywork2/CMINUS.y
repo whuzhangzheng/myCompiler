@@ -13,6 +13,7 @@ extern int yylineno;
 	float valf;
 	SYMREC *tptr;
 	int type;
+	EXPVAL expval;
 }
 
 %token <vali> INT 					// 258
@@ -33,15 +34,16 @@ extern int yylineno;
 %token <type> IF ELSE
 %token <type> WHILE
 %token FNCT
+%token ERRORA;
 
-%type <EXPVAL> Exp
+%type <expval> Exp
 
 
 %%
 
-Program : ExtDefList 			{}
-ExtDefList :	/*定义列表*/	{}
-	| ExtDef ExtDefList 		{}
+Program : ExtDefList 			{printf("Program(%d)\n",yylineno);}
+ExtDefList :	/*定义列表*/	{printf("ExtDefList(%d)\n",yylineno);}
+	| ExtDef ExtDefList 		{printf("ExtDefList(%d)\n",yylineno);}
 	;	 
 ExtDef : Specifier ExtDecList SEMI	{} 
 	| Specifier SEMI 			{}
@@ -63,6 +65,7 @@ Tag : ID						{}
 	;
 VarDec : ID 					{}
 	| VarDec LB INT RB			{}
+	| VarDec LB INT error RB	{printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);}
 	;
 FunDec : ID LP VarList RP 		{}
 	| ID LP RP 					{}
@@ -74,10 +77,11 @@ ParamDec : Specifier VarDec		{}
 	;
 CompSt : LC DefList StmtList RC {}
 	;
-StmtList : 						{}
+StmtList : 						{/* \epsilon */}
 	| Stmt StmtList 			{}
 	;
 Stmt : Exp SEMI 				{}
+	| Exp error SEMI 			{printf("Error Type B at Line %d: Missing \";\"\n", yylineno);}
 	| CompSt 					{}
 	| RETURN Exp SEMI 			{}
 	| IF LP Exp RP Stmt 		{}
@@ -94,34 +98,64 @@ DecList : Dec 					{}
 	;
 Dec : VarDec 					{}
 	| VarDec ASSIGNOP Exp 		{}
+	| VarDec ASSIGNOP error Exp 		{}
 	;
 	
 // 表达式
-Exp : Exp ASSIGNOP Exp 			{}
+Exp : Exp ASSIGNOP Exp 			{$$.type = $3.type; }
 	| Exp AND Exp 				{}
 	| Exp OR Exp 				{}
 	| Exp RELOP Exp 			{}
-	| Exp PLUS Exp 				{}
-	| Exp MINUS Exp 			{}
-	| Exp STAR Exp 				{}
-	| Exp DIV Exp 				{}
+	| Exp PLUS Exp 				{$$.type = ($1.type==INT && $3.type==INT)?INT:FLOAT; 
+								 if		($$.type==INT) {$$.value.vali =  $1.value.vali + $3.value.vali;}
+								 else 	$$.value.valf = (($1.type==INT)?$1.value.vali:$1.value.valf)+(($3.type==INT)?$3.value.vali:$3.value.valf);
+								}
+	| Exp MINUS Exp 			{$$.type = ($1.type==INT && $3.type==INT)?INT:FLOAT; 
+								 if		($$.type==INT) {$$.value.vali =  $1.value.vali - $3.value.vali;}
+								 else 	$$.value.valf = (($1.type==INT)?$1.value.vali:$1.value.valf)-(($3.type==INT)?$3.value.vali:$3.value.valf);
+								}
+	| Exp STAR Exp 				{$$.type = ($1.type==INT && $3.type==INT)?INT:FLOAT; 
+								 if		($$.type==INT) {$$.value.vali =  $1.value.vali * $3.value.vali;}
+								 else 	$$.value.valf = (($1.type==INT)?$1.value.vali:$1.value.valf)*(($3.type==INT)?$3.value.vali:$3.value.valf);
+								}
+	| Exp DIV Exp 				{$$.type = ($1.type==INT && $3.type==INT)?INT:FLOAT; 
+								 if		($$.type==INT) {$$.value.vali =  $1.value.vali / $3.value.vali;}
+								 else 	$$.value.valf = (($1.type==INT)?$1.value.vali:$1.value.valf)/(($3.type==INT)?$3.value.vali:$3.value.valf);
+								}
 	| LP Exp RP 				{}
 	| MINUS Exp 				{}
 	| NOT Exp 					{}
 	| ID LP Args RP 			{}
 	| ID LP RP 					{}
 	| Exp LB Exp RB 			{}
+	| Exp LB Exp error RB 		{printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);}
 	| Exp DOT ID 				{}
 	| ID 						{}
-	| INT 						{}
-	| FLOAT 					{}
+	| INT 						{$$.type = INT; $$.value.vali = $1;}
+	| FLOAT 					{$$.type = FLOAT; $$.value.valf = $1;}
 	;
 Args : Exp COMMA Args 	// 参数
 	| Exp
 	;
 %%
 
+
+int main(int argc, char** argv){
+	FILE*f;
+	if(argc > 1){
+		if(!(f=fopen(argv[1],"r"))){
+			perror(argv[1]);
+			return 1;
+		}
+		yyrestart(f);
+	}
+	yylineno = 1;
+	yyparse();
+	
+	return 0;
+}
+
 void yyerror(char*s){
-	char type = 'A';
-	printf("Error type %c at Line %d: %s\n",type, yylineno, s);
+	//char type = 'A';
+	//printf("Error type %c at Line %d: %s\n",type, yylineno, s);
 }

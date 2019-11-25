@@ -6,7 +6,7 @@
 int base8ConverTo10(int);
 int base16ConverTo10(char *);
 float readFloat(char *);
-
+//extern int error;
 
 %}
 
@@ -34,7 +34,7 @@ float readFloat(char *);
 "while"				{return WHILE;}
 
  /*ID*/
-[a-zA-Z_][a-zA-Z_0-9]				{return ID;}
+[a-zA-Z_][a-zA-Z_0-9]*				{return ID;}
 
  /*±êµã·ûºÅ*/
 ";"				{return SEMI;}
@@ -65,10 +65,21 @@ float readFloat(char *);
 "!"				{return NOT;}
 
 \n				{}
+
+.				{printf("Error type A at Line %d:Mysterious character %c\n", yylineno, yytext[0]); return 1;}
 %%
 
-
-int main(){
+/*
+int main(int argc, char** argv){
+	FILE*f;
+	if(argc > 1){
+		if(!(f=fopen(argv[1],"r"))){
+			perror(argv[1]);
+			return 1;
+		}
+		yyrestart(f);
+	}
+	
 	int tok;
 	while(tok = yylex()){
 		switch(tok){
@@ -80,6 +91,7 @@ int main(){
 	}
 	return 0;
 }
+*/
 
 int char2int(char c){
 	if(c>='0' && c <='9'){
