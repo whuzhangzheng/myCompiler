@@ -4,8 +4,11 @@
 
 void yyerror(char *);
 int yylex();
+void toGramTree(char *name);
 
 extern int yylineno;
+int err=0;
+char gramTree[10000]="";
 %}
 
 %union{
@@ -41,19 +44,19 @@ extern int yylineno;
 
 %%
 
-Program : ExtDefList 			{printf("Program(%d)\n",yylineno);}
-ExtDefList :	/*定义列表*/	{printf("ExtDefList(%d)\n",yylineno);}
-	| ExtDef ExtDefList 		{printf("ExtDefList(%d)\n",yylineno);}
+Program : 	{toGramTree("Program")} 	ExtDefList 			
+ExtDefList:	{}
+	| 		{toGramTree("ExtDefList");} 	ExtDef ExtDefList 		
 	;	 
-ExtDef : Specifier ExtDecList SEMI	{} 
-	| Specifier SEMI 			{}
-	| Specifier FunDec CompSt 	{}
+ExtDef: {toGramTree("ExtDef");}  	Specifier ExtDecList SEMI	{}
+	| 	{toGramTree("ExtDef");}		Specifier SEMI 				{}
+	| 	{toGramTree("ExtDef");}		Specifier FunDec CompSt 	{}
 	;
-ExtDecList : VarDec 			{}
-	| VarDec COMMA ExtDecList	{}
+ExtDecList : {toGramTree("ExtDecList");}	VarDec 			{}
+	| 		{toGramTree("ExtDecList");}  	VarDec COMMA ExtDecList	{}
 	;
-Specifier : TYPE 				{}
-	| StructSpecifier 			{}
+Specifier : {toGramTree("Specifier");}	TYPE 				{}
+	| 		{toGramTree("Specifier");}		StructSpecifier 			{}
 	;
 StructSpecifier : STRUCT OptTag LC DefList RC	{} 
 	| STRUCT Tag 				{}
@@ -63,76 +66,64 @@ OptTag :  						{}
 	;
 Tag : ID						{}
 	;
-VarDec : ID 					{}
-	| VarDec LB INT RB			{}
-	| VarDec LB INT error RB	{printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);}
+VarDec : {toGramTree("VarDec");} 	ID 					{}
+	| {toGramTree("VarDec");}		VarDec LB INT RB			{}
+	| {toGramTree("VarDec");}		VarDec LB INT error RB	{err = 1;printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);}
 	;
-FunDec : ID LP VarList RP 		{}
-	| ID LP RP 					{}
+FunDec: {toGramTree("FunDec");} ID LP VarList RP 		{}
+	| {toGramTree("FunDec");}	ID LP RP 					{}
 	;
 VarList : ParamDec COMMA VarList {}
 	| ParamDec 					{}
 	;
 ParamDec : Specifier VarDec		{}
 	;
-CompSt : LC DefList StmtList RC {}
+CompSt : {toGramTree("CompSt");}		LC DefList StmtList RC {}
 	;
 StmtList : 						{/* \epsilon */}
-	| Stmt StmtList 			{}
+	|{toGramTree("StmtList");} Stmt StmtList 			{}
 	;
-Stmt : Exp SEMI 				{}
-	| Exp error SEMI 			{printf("Error Type B at Line %d: Missing \";\"\n", yylineno);}
-	| CompSt 					{}
-	| RETURN Exp SEMI 			{}
-	| IF LP Exp RP Stmt 		{}
-	| IF LP Exp RP Stmt ELSE Stmt	{} 
-	| WHILE LP Exp RP Stmt 		{}
+Stmt : {toGramTree("Stmt");} 	Exp SEMI 				{}
+	| {toGramTree("Stmt");}		Exp error SEMI 			{err=1; printf("Error Type B at Line %d: Missing \";\"\n", yylineno);}
+	| {toGramTree("Stmt");}		CompSt 					{}
+	| {toGramTree("Stmt");}		RETURN Exp SEMI 			{}
+	| {toGramTree("Stmt");}		IF LP Exp RP Stmt 		{}
+	| {toGramTree("Stmt");}		IF LP Exp RP Stmt ELSE Stmt	{} 
+	| {toGramTree("Stmt");}		WHILE LP Exp RP Stmt 		{}
 	;
 DefList : 						{}
-	|Def DefList 				{}
+	|{toGramTree("DefList");}		Def DefList 				{}
 	;
-Def : Specifier DecList SEMI 	{}
+Def : {toGramTree("Def");}			Specifier DecList SEMI 	{}
 	;
-DecList : Dec 					{}
-	| Dec COMMA DecList 		{}
+DecList : {toGramTree("DecList");} 	Dec 					{}
+	| {toGramTree("DecList");}		Dec COMMA DecList 		{}
 	;
-Dec : VarDec 					{}
-	| VarDec ASSIGNOP Exp 		{}
-	| VarDec ASSIGNOP error Exp 		{}
+Dec : {toGramTree("Dec");}VarDec 					{}
+	| {toGramTree("Dec");}VarDec ASSIGNOP Exp 		{}
+	| {toGramTree("Dec");}VarDec ASSIGNOP error Exp 		{err=1;}
 	;
 	
 // 表达式
-Exp : Exp ASSIGNOP Exp 			{$$.type = $3.type; }
-	| Exp AND Exp 				{}
-	| Exp OR Exp 				{}
-	| Exp RELOP Exp 			{}
-	| Exp PLUS Exp 				{$$.type = ($1.type==INT && $3.type==INT)?INT:FLOAT; 
-								 if		($$.type==INT) {$$.value.vali =  $1.value.vali + $3.value.vali;}
-								 else 	$$.value.valf = (($1.type==INT)?$1.value.vali:$1.value.valf)+(($3.type==INT)?$3.value.vali:$3.value.valf);
-								}
-	| Exp MINUS Exp 			{$$.type = ($1.type==INT && $3.type==INT)?INT:FLOAT; 
-								 if		($$.type==INT) {$$.value.vali =  $1.value.vali - $3.value.vali;}
-								 else 	$$.value.valf = (($1.type==INT)?$1.value.vali:$1.value.valf)-(($3.type==INT)?$3.value.vali:$3.value.valf);
-								}
-	| Exp STAR Exp 				{$$.type = ($1.type==INT && $3.type==INT)?INT:FLOAT; 
-								 if		($$.type==INT) {$$.value.vali =  $1.value.vali * $3.value.vali;}
-								 else 	$$.value.valf = (($1.type==INT)?$1.value.vali:$1.value.valf)*(($3.type==INT)?$3.value.vali:$3.value.valf);
-								}
-	| Exp DIV Exp 				{$$.type = ($1.type==INT && $3.type==INT)?INT:FLOAT; 
-								 if		($$.type==INT) {$$.value.vali =  $1.value.vali / $3.value.vali;}
-								 else 	$$.value.valf = (($1.type==INT)?$1.value.vali:$1.value.valf)/(($3.type==INT)?$3.value.vali:$3.value.valf);
-								}
-	| LP Exp RP 				{}
-	| MINUS Exp 				{}
-	| NOT Exp 					{}
-	| ID LP Args RP 			{}
-	| ID LP RP 					{}
-	| Exp LB Exp RB 			{}
-	| Exp LB Exp error RB 		{printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);}
-	| Exp DOT ID 				{}
-	| ID 						{}
-	| INT 						{$$.type = INT; $$.value.vali = $1;}
-	| FLOAT 					{$$.type = FLOAT; $$.value.valf = $1;}
+Exp : {toGramTree("Exp");}		Exp ASSIGNOP Exp 			{/*$$.type = $3.type; */}
+	| {toGramTree("Exp");}	Exp AND Exp 			{}
+	| {toGramTree("Exp");}	Exp OR Exp 				{}
+	| {toGramTree("Exp");}	Exp RELOP Exp 			{}
+	| {toGramTree("Exp");}	Exp PLUS Exp 			{}
+	| {toGramTree("Exp");}	Exp MINUS Exp 			{}
+	| {toGramTree("Exp");}Exp STAR Exp 				{}
+	| {toGramTree("Exp");}Exp DIV Exp 				{}
+	| {toGramTree("Exp");}LP Exp RP 				{}
+	| {toGramTree("Exp");}MINUS Exp 				{}
+	| {toGramTree("Exp");}NOT Exp 					{}
+	| {toGramTree("Exp");}ID LP Args RP 			{}
+	| {toGramTree("Exp");}ID LP RP 					{}
+	| {toGramTree("Exp");}Exp LB Exp RB 			{}
+	| {toGramTree("Exp");}Exp LB Exp error RB 		{err=1; printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);}
+	| {toGramTree("Exp");}Exp DOT ID 				{}
+	| {toGramTree("Exp");}ID 						{}
+	| {toGramTree("Exp");}INT 						{$$.type = INT; $$.value.vali = $2;}
+	| {toGramTree("Exp");} FLOAT 					{$$.type = FLOAT; $$.value.valf = $2;}
 	;
 Args : Exp COMMA Args 	// 参数
 	| Exp
@@ -151,11 +142,24 @@ int main(int argc, char** argv){
 	}
 	yylineno = 1;
 	yyparse();
+	if(!err){
+		printf("gramTree:\n%s",gramTree);
+	}
 	
 	return 0;
 }
 
 void yyerror(char*s){
-	//char type = 'A';
-	//printf("Error type %c at Line %d: %s\n",type, yylineno, s);
+	char type = 'A';
+	printf("Error type %c at Line %d: %s\n",type, yylineno, s);
+}
+void toGramTree(char *name){
+	char tmp[100];
+	sprintf(tmp, "%s(%d)\n",name,yylineno);strcat(gramTree, tmp);
+}
+void tmpcode(){
+	/* $$.type = ($1.type==INT && $3.type==INT)?INT:FLOAT; 
+								 if		($$.type==INT) {$$.value.vali =  $1.value.vali + $3.value.vali;}
+								 else 	$$.value.valf = (($1.type==INT)?$1.value.vali:$1.value.valf)+(($3.type==INT)?$3.value.vali:$3.value.valf);
+								*/
 }
