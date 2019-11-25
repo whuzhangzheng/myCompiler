@@ -426,8 +426,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    24,    24,    25,    27,    28,    29,    31,    32,    33,
-      34,    35,    35,    36,    36,    37,    37,    38
+       0,    25,    25,    26,    28,    29,    30,    32,    33,    34,
+      35,    36,    36,    37,    37,    38,    38,    39
 };
 #endif
 
@@ -1348,91 +1348,91 @@ yyreduce:
         case 5:
 
 /* Line 1455 of yacc.c  */
-#line 28 "mcalc.y"
+#line 29 "mcalc.y"
     { printf("\t%.10g\n", (yyvsp[(1) - (2)].val)); ;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 29 "mcalc.y"
+#line 30 "mcalc.y"
     { yyerrok; ;}
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 31 "mcalc.y"
+#line 32 "mcalc.y"
     { (yyval.val) = (yyvsp[(1) - (1)].val); ;}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 32 "mcalc.y"
+#line 33 "mcalc.y"
     { (yyval.val) = (yyvsp[(1) - (1)].tptr)->value.var; ;}
     break;
 
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 33 "mcalc.y"
+#line 34 "mcalc.y"
     { (yyval.val) = (yyvsp[(3) - (3)].val); (yyvsp[(1) - (3)].tptr)->value.var = (yyvsp[(3) - (3)].val); ;}
     break;
 
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 34 "mcalc.y"
+#line 35 "mcalc.y"
     { (yyval.val) = (*((yyvsp[(1) - (4)].tptr)->value.fnctptr))((yyvsp[(3) - (4)].val)); ;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 35 "mcalc.y"
+#line 36 "mcalc.y"
     { (yyval.val) = (yyvsp[(1) - (3)].val) + (yyvsp[(3) - (3)].val); ;}
     break;
 
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 35 "mcalc.y"
+#line 36 "mcalc.y"
     { (yyval.val) = (yyvsp[(1) - (3)].val) - (yyvsp[(3) - (3)].val); ;}
     break;
 
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 36 "mcalc.y"
+#line 37 "mcalc.y"
     { (yyval.val) = (yyvsp[(1) - (3)].val) * (yyvsp[(3) - (3)].val); ;}
     break;
 
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 36 "mcalc.y"
+#line 37 "mcalc.y"
     { (yyval.val) = (yyvsp[(1) - (3)].val) / (yyvsp[(3) - (3)].val); ;}
     break;
 
   case 15:
 
 /* Line 1455 of yacc.c  */
-#line 37 "mcalc.y"
+#line 38 "mcalc.y"
     { (yyval.val) = -(yyvsp[(2) - (2)].val); ;}
     break;
 
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 37 "mcalc.y"
+#line 38 "mcalc.y"
     { (yyval.val) = pow ((yyvsp[(1) - (3)].val), (yyvsp[(3) - (3)].val)); ;}
     break;
 
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 38 "mcalc.y"
+#line 39 "mcalc.y"
     { (yyval.val) = (yyvsp[(2) - (3)].val); ;}
     break;
 
@@ -1651,7 +1651,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 41 "mcalc.y"
+#line 42 "mcalc.y"
  
 void yyerror(const char *s) {
 	fprintf(stderr, "%s", s); 

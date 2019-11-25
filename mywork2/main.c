@@ -38,7 +38,7 @@ void init_table () /* 将数学函数预置于符号表中 */
 }
 int main() { 
 	extern int yydebug;
-	yydebug = 1;
+	//yydebug = 1;
 
 	init_table(); 
 	yyparse(); 

@@ -1,19 +1,18 @@
 
 %{
 #include"CMINUS.h"
-void yyerror(char*);
+
+void yyerror(char *);
 int yylex();
+
+extern int yylineno;
 %}
 
 %union{
 	int vali;
 	float valf;
-	struct data{
-		int dtype;
-		float val;
-	};
-	int type;
 	SYMREC *tptr;
+	int type;
 }
 
 %token <vali> INT 					// 258
@@ -33,8 +32,9 @@ int yylex();
 %token <type> RETURN
 %token <type> IF ELSE
 %token <type> WHILE
+%token FNCT
 
-%type <data> Exp 
+%type <EXPVAL> Exp 
 
 
 %%
@@ -122,5 +122,6 @@ Args : Exp COMMA Args 	// ²ÎÊý
 %%
 
 void yyerror(char*s){
-	printf("error: %s\n",s);
+	char type = 'A';
+	printf("Error type %c at Line %d: %s\n",type, yylineno, s);
 }

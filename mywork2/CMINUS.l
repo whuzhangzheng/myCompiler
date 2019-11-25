@@ -1,3 +1,5 @@
+%option noyywrap nodefault yylineno
+
 %{
 #include"CMINUS.h"
 #include"CMINUS.tab.h"
@@ -22,9 +24,9 @@ float readFloat(char *);
 0[1-9][0-9]*	{yylval.vali = base8ConverTo10(atoi(yytext)); return INT;}
 0[xX][0-9a-fA-F]*	{yylval.vali = base16ConverTo10(yytext); return INT;}
  /* 浮点数的支持*/
-[0-9]+.[0-9]+						{yylval.valf = readFloat(yytext); return FLOAT;}
-[0-9]+.[0-9]*[eE][+-]?[0-9]+		{yylval.valf = readFloat(yytext); return FLOAT;}
-.[0-9]+[eE][+-]?[0-9]+				{yylval.valf = readFloat(yytext); return FLOAT;}
+[0-9]+\.[0-9]+						{yylval.valf = readFloat(yytext); return FLOAT;}
+[0-9]+\.[0-9]*[eE][+-]?[0-9]+	|
+\.[0-9]+[eE][+-]?[0-9]+				{yylval.valf = readFloat(yytext); return FLOAT;}
 
  /*关键字*/
 "int"|"float"		{return TYPE;}
