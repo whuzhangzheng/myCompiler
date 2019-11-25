@@ -1,3 +1,4 @@
+
 #include <stdio.h> 
 #include <string.h> 
 #include <math.h> 
@@ -16,6 +17,7 @@ struct symrec {
 	struct symrec *next; /* 指向下一个符号单元 */ 
 }; 
 typedef struct symrec SYMREC; /* 符号表的应用定义*/
+
 
 struct expVal{
 	int type;		// INT   FLOAT

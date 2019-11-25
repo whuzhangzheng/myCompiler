@@ -14,9 +14,6 @@ float readFloat(char *);
  /*忽略空白符*/
 [ \t]			{}
 
- /*注释*/
-"//".*			{}
-"/*".*"*/"		{/*这个正则表达式有些问题*/}
 
  /* 对整数的支持(包括8进制和16进制)*/
 0				{yylval.vali = 0; return INT;}
@@ -66,18 +63,20 @@ float readFloat(char *);
 "&&"			{return AND;}
 "||"			{return OR;}
 "!"				{return NOT;}
+
+\n				{}
 %%
 
 
 int main(){
 	int tok;
-	char s[5] = "23.4";
 	while(tok = yylex()){
 		switch(tok){
 			case INT: 	{printf("%d:%d\n", tok, yylval.vali); break;}
 			case FLOAT: 	{printf("%d:%f\n", tok, yylval.valf); break;}
 			default:	{printf("%d\n",tok);}
 		}
+		printf("%d\n",tok);
 	}
 	return 0;
 }

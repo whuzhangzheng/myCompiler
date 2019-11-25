@@ -34,7 +34,7 @@ extern int yylineno;
 %token <type> WHILE
 %token FNCT
 
-%type <EXPVAL> Exp 
+%type <EXPVAL> Exp
 
 
 %%
