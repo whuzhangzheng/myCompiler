@@ -39,35 +39,8 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     INT = 258,
-     FLOAT = 259,
-     ID = 260,
-     SEMI = 261,
-     COMMA = 262,
-     ASSIGNOP = 263,
-     RELOP = 264,
-     PLUS = 265,
-     MINUS = 266,
-     STAR = 267,
-     DIV = 268,
-     AND = 269,
-     OR = 270,
-     NOT = 271,
-     DOT = 272,
-     TYPE = 273,
-     LP = 274,
-     RP = 275,
-     LB = 276,
-     RB = 277,
-     LC = 278,
-     RC = 279,
-     STRUCT = 280,
-     RETURN = 281,
-     IF = 282,
-     ELSE = 283,
-     WHILE = 284,
-     FNCT = 285,
-     ERRORA = 286
+     NUMBER = 258,
+     EOL = 259
    };
 #endif
 
@@ -78,18 +51,15 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 14 "CMINUS.y"
+#line 16 "fb3-1.y"
 
-	int vali;
-	float valf;
-	SYMREC *tptr;
-	int type;
-	EXPVAL expval;
+  struct ast *a;
+  double d;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 93 "CMINUS.tab.h"
+#line 63 "fb3-1.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

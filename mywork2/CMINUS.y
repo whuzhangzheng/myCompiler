@@ -4,8 +4,11 @@
 
 void yyerror(char *);
 int yylex();
+void toGramTree(char *name);
 
 extern int yylineno;
+int err=0;
+char gramTree[10000]="";
 %}
 
 %union{
@@ -41,9 +44,9 @@ extern int yylineno;
 
 %%
 
-Program : ExtDefList 			{printf("Program(%d)\n",yylineno);}
-ExtDefList :	/*定义列表*/	{printf("ExtDefList(%d)\n",yylineno);}
-	| ExtDef ExtDefList 		{printf("ExtDefList(%d)\n",yylineno);}
+Program : 	{toGramTree("Program")} 	ExtDefList 			
+ExtDefList:	{}
+	| 		{toGramTree("ExtDefList");} 	ExtDef ExtDefList 		
 	;	 
 ExtDef : Specifier ExtDecList SEMI	{} 
 	| Specifier SEMI 			{}
@@ -156,6 +159,16 @@ int main(int argc, char** argv){
 }
 
 void yyerror(char*s){
-	//char type = 'A';
-	//printf("Error type %c at Line %d: %s\n",type, yylineno, s);
+	char type = 'C';
+	printf("Error type %c at Line %d: %s\n",type, yylineno, s);
+}
+void toGramTree(char *name){
+	char tmp[100];
+	sprintf(tmp, "%s(%d)\n",name,yylineno);strcat(gramTree, tmp);
+}
+void tmpcode(){
+	/* $$.type = ($1.type==INT && $3.type==INT)?INT:FLOAT; 
+								 if		($$.type==INT) {$$.value.vali =  $1.value.vali + $3.value.vali;}
+								 else 	$$.value.valf = (($1.type==INT)?$1.value.vali:$1.value.valf)+(($3.type==INT)?$3.value.vali:$3.value.valf);
+								*/
 }
