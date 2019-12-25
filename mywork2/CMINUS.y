@@ -46,14 +46,14 @@ char gramTree[10000]="";
 
 Program : 	{toGramTree("Program")} 	ExtDefList 			
 ExtDefList:	{}
-	| 		{toGramTree("ExtDefList");} 	ExtDef ExtDefList 		
+	| 		{toGramTree("ExtDefList");  toGramTree("ExtDef";} 	ExtDef  ExtDefList 		
 	;	 
-ExtDef: {toGramTree("ExtDef");}  	Specifier ExtDecList SEMI	{}
-	| 	{toGramTree("ExtDef");}		Specifier SEMI 				{}
-	| 	{toGramTree("ExtDef");}		Specifier FunDec CompSt 	{}
+ExtDef:  	Specifier  ExtDecList  SEMI	{}
+	| 		Specifier 	SEMI 				{}
+	| 		{toGramTree("ExtDef");} Specifier 	 FunDec  CompSt 	{}
 	;
-ExtDecList : {toGramTree("ExtDecList");}	VarDec 			{}
-	| 		{toGramTree("ExtDecList");}  	VarDec COMMA ExtDecList	{}
+ExtDecList : VarDec {toGramTree("ExtDecList");}		
+	| 		VarDec {toGramTree("ExtDecList");}  COMMA ExtDecList	{}
 	;
 Specifier : {toGramTree("Specifier");}	TYPE 				{}
 	| 		{toGramTree("Specifier");}		StructSpecifier 			{}
@@ -70,8 +70,8 @@ VarDec : {toGramTree("VarDec");} 	ID 					{}
 	| {toGramTree("VarDec");}		VarDec LB INT RB			{}
 	| {toGramTree("VarDec");}		VarDec LB INT error RB	{err = 1;printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);}
 	;
-FunDec: {toGramTree("FunDec");} ID LP VarList RP 		{}
-	| {toGramTree("FunDec");}	ID LP RP 					{}
+FunDec:  ID LP{toGramTree("FunDec");} VarList RP 		{}
+	|	ID LP {toGramTree("FunDec");} RP 					{}
 	;
 VarList : ParamDec COMMA VarList {}
 	| ParamDec 					{}
@@ -81,14 +81,14 @@ ParamDec : Specifier VarDec		{}
 CompSt : {toGramTree("CompSt");}		LC DefList StmtList RC {}
 	;
 StmtList : 						{/* \epsilon */}
-	|{toGramTree("StmtList");} Stmt StmtList 			{}
+	|	{toGramTree("StmtList");} Stmt StmtList 			{}
 	;
-Stmt : {toGramTree("Stmt");} 	Exp SEMI 				{}
-	| {toGramTree("Stmt");}		Exp error SEMI 			{err=1; printf("Error Type B at Line %d: Missing \";\"\n", yylineno);}
+Stmt :  Exp {toGramTree("Stmt");} SEMI 				{}
+	| 	Exp	{toGramTree("Stmt");}	 error SEMI 			{err=1; printf("Error Type B at Line %d: Missing \";\"\n", yylineno);}
 	| {toGramTree("Stmt");}		CompSt 					{}
 	| {toGramTree("Stmt");}		RETURN Exp SEMI 			{}
-	| {toGramTree("Stmt");}		IF LP Exp RP Stmt 		{}
-	| {toGramTree("Stmt");}		IF LP Exp RP Stmt ELSE Stmt	{} 
+	| 	IF LP Exp RP Stmt 		{toGramTree("Stmt");}	
+	| 	IF LP Exp RP Stmt ELSE {toGramTree("Stmt");}  Stmt	{} 
 	| {toGramTree("Stmt");}		WHILE LP Exp RP Stmt 		{}
 	;
 DefList : 						{}
@@ -96,34 +96,34 @@ DefList : 						{}
 	;
 Def : {toGramTree("Def");}			Specifier DecList SEMI 	{}
 	;
-DecList : {toGramTree("DecList");} 	Dec 					{}
-	| {toGramTree("DecList");}		Dec COMMA DecList 		{}
+DecList :  	Dec 					{toGramTree("DecList");}
+	| 		Dec COMMA DecList 		{toGramTree("DecList");}
 	;
-Dec : {toGramTree("Dec");}VarDec 					{}
-	| {toGramTree("Dec");}VarDec ASSIGNOP Exp 		{}
-	| {toGramTree("Dec");}VarDec ASSIGNOP error Exp 		{err=1;}
+Dec : 	VarDec 					{toGramTree("Dec");}
+	| VarDec ASSIGNOP Exp 		{toGramTree("Dec");}	
+	| VarDec ASSIGNOP error Exp {toGramTree("Dec"); 	err=1;}
 	;
 	
 // 表达式
-Exp : {toGramTree("Exp");}		Exp ASSIGNOP Exp 			{/*$$.type = $3.type; */}
-	| {toGramTree("Exp");}	Exp AND Exp 			{}
-	| {toGramTree("Exp");}	Exp OR Exp 				{}
-	| {toGramTree("Exp");}	Exp RELOP Exp 			{}
-	| {toGramTree("Exp");}	Exp PLUS Exp 			{}
-	| {toGramTree("Exp");}	Exp MINUS Exp 			{}
-	| {toGramTree("Exp");}Exp STAR Exp 				{}
-	| {toGramTree("Exp");}Exp DIV Exp 				{}
-	| {toGramTree("Exp");}LP Exp RP 				{}
-	| {toGramTree("Exp");}MINUS Exp 				{}
-	| {toGramTree("Exp");}NOT Exp 					{}
-	| {toGramTree("Exp");}ID LP Args RP 			{}
-	| {toGramTree("Exp");}ID LP RP 					{}
-	| {toGramTree("Exp");}Exp LB Exp RB 			{}
-	| {toGramTree("Exp");}Exp LB Exp error RB 		{err=1; printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);}
-	| {toGramTree("Exp");}Exp DOT ID 				{}
-	| {toGramTree("Exp");}ID 						{}
-	| {toGramTree("Exp");}INT 						{$$.type = INT; $$.value.vali = $2;}
-	| {toGramTree("Exp");} FLOAT 					{$$.type = FLOAT; $$.value.valf = $2;}
+Exp :	Exp ASSIGNOP Exp 		{toGramTree("Exp"); /*$$.type = $3.type; */}
+	| 	Exp AND Exp 			{toGramTree("Exp");}
+	| 	Exp OR Exp 				{toGramTree("Exp");}
+	| 	Exp RELOP Exp 			{toGramTree("Exp");}
+	| 	Exp PLUS Exp 			{toGramTree("Exp");}
+	| 	Exp MINUS Exp 			{toGramTree("Exp");}
+	| 	Exp STAR Exp 			{toGramTree("Exp");}
+	| 	Exp DIV Exp 			{toGramTree("Exp");}
+	| 	LP Exp RP 				{toGramTree("Exp");}
+	|	MINUS Exp 				{toGramTree("Exp");}
+	| 	NOT Exp 				{toGramTree("Exp");}
+	| 	ID LP Args RP 			{toGramTree("Exp");}
+	| 	ID LP RP 				{toGramTree("Exp");}
+	| 	Exp LB Exp RB 			{toGramTree("Exp");}
+	| 	Exp LB Exp error RB 	{toGramTree("Exp"); err=1; printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);}
+	| 	Exp DOT ID 				{toGramTree("Exp");}
+	| 	ID 						{toGramTree("Exp");}
+	| 	INT 					{toGramTree("Exp"); 	$$.type = INT; $$.value.vali = $1;}
+	| 	FLOAT 					{toGramTree("Exp");		$$.type = FLOAT; $$.value.valf = $1;}
 	;
 Args : Exp COMMA Args 	// 参数
 	| Exp
