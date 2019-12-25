@@ -41,9 +41,9 @@ extern int yylineno;
 
 %%
 
-Program : ExtDefList 			{printf("Program(%d)\n",yylineno);}
-ExtDefList :	/*定义列表*/	{printf("ExtDefList(%d)\n",yylineno);}
-	| ExtDef ExtDefList 		{printf("ExtDefList(%d)\n",yylineno);}
+Program : ExtDefList 			{}
+ExtDefList :	/*定义列表*/	{}
+	| ExtDef ExtDefList 		{}
 	;	 
 ExtDef : Specifier ExtDecList SEMI	{} 
 	| Specifier SEMI 			{}

@@ -1481,21 +1481,21 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 44 "CMINUS.y"
-    {printf("Program(%d)\n",yylineno);;}
+    {;}
     break;
 
   case 3:
 
 /* Line 1455 of yacc.c  */
 #line 45 "CMINUS.y"
-    {printf("ExtDefList(%d)\n",yylineno);;}
+    {;}
     break;
 
   case 4:
 
 /* Line 1455 of yacc.c  */
 #line 46 "CMINUS.y"
-    {printf("ExtDefList(%d)\n",yylineno);;}
+    {;}
     break;
 
   case 5:
@@ -2144,6 +2144,6 @@ int main(int argc, char** argv){
 }
 
 void yyerror(char*s){
-	char type = 'A';
-	printf("Error type %c at Line %d: %s\n",type, yylineno, s);
+	//char type = 'A';
+	//printf("Error type %c at Line %d: %s\n",type, yylineno, s);
 }
