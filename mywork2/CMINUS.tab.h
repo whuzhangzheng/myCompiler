@@ -85,11 +85,12 @@ typedef union YYSTYPE
 	SYMREC *tptr;
 	int type;
 	EXPVAL expval;
+	NODE node;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 93 "CMINUS.tab.h"
+#line 94 "CMINUS.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

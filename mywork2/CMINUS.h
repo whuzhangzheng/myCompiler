@@ -31,5 +31,7 @@ struct expVal{
 typedef struct expVal EXPVAL;
 //extern SYMREC *sym_table; 
 
-
-
+struct Node{
+	int level;
+};
+typedef struct Node NODE;
