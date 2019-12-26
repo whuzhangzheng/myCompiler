@@ -1,40 +1,45 @@
 
 %{
 #include"CMINUS.h"
+#include"tree.h"
 
 void yyerror(char *);
 int yylex();
 
 extern int yylineno;
+struct Node *cldArray[10];
+int cldN;
+int nTag;
+
 %}
 
 %union{
+	struct Node * val;
 	int vali;
 	float valf;
-	SYMREC *tptr;
-	int type;
-	EXPVAL expval;
 }
 
-%token <vali> INT 					// 258
-%token <valf> FLOAT					// 259
-%token <tptr> ID						// 260
-%token <type> SEMI COMMA 				// 261 262	
-%token <type> ASSIGNOP	
-%token <type> RELOP					// 我觉得这个得展开，但暂时忽略	
-%token <type> PLUS MINUS STAR DIV		// 265
-%token <type> AND OR NOT
-%token <type> DOT
-%token <type> TYPE
-%token <type> LP RP
-%token <type> LB RB
-%token <type> LC RC
-%token <type> STRUCT
-%token <type> RETURN
-%token <type> IF ELSE
-%token <type> WHILE
+%token <vali>INT 					// 258
+%token <valf>FLOAT					// 259
+%token  ID						// 260
+%token  SEMI COMMA 				// 261 262	
+%token  ASSIGNOP	
+%token  RELOP					// 我觉得这个得展开，但暂时忽略	
+%token  PLUS MINUS STAR DIV		// 265
+%token  AND OR NOT
+%token  DOT
+%token  TYPE
+%token  LP RP
+%token  LB RB
+%token  LC RC
+%token  STRUCT
+%token  RETURN
+%token  IF ELSE
+%token  WHILE
 %token FNCT
 %token ERRORA;
+
+%token  EPS
 
 %type <expval> Exp
 
@@ -102,26 +107,14 @@ Dec : VarDec 					{}
 	;
 	
 // 表达式
-Exp : Exp ASSIGNOP Exp 			{$$.type = $3.type; }
+Exp : Exp ASSIGNOP Exp 			{}
 	| Exp AND Exp 				{}
 	| Exp OR Exp 				{}
 	| Exp RELOP Exp 			{}
-	| Exp PLUS Exp 				{$$.type = ($1.type==INT && $3.type==INT)?INT:FLOAT; 
-								 if		($$.type==INT) {$$.value.vali =  $1.value.vali + $3.value.vali;}
-								 else 	$$.value.valf = (($1.type==INT)?$1.value.vali:$1.value.valf)+(($3.type==INT)?$3.value.vali:$3.value.valf);
-								}
-	| Exp MINUS Exp 			{$$.type = ($1.type==INT && $3.type==INT)?INT:FLOAT; 
-								 if		($$.type==INT) {$$.value.vali =  $1.value.vali - $3.value.vali;}
-								 else 	$$.value.valf = (($1.type==INT)?$1.value.vali:$1.value.valf)-(($3.type==INT)?$3.value.vali:$3.value.valf);
-								}
-	| Exp STAR Exp 				{$$.type = ($1.type==INT && $3.type==INT)?INT:FLOAT; 
-								 if		($$.type==INT) {$$.value.vali =  $1.value.vali * $3.value.vali;}
-								 else 	$$.value.valf = (($1.type==INT)?$1.value.vali:$1.value.valf)*(($3.type==INT)?$3.value.vali:$3.value.valf);
-								}
-	| Exp DIV Exp 				{$$.type = ($1.type==INT && $3.type==INT)?INT:FLOAT; 
-								 if		($$.type==INT) {$$.value.vali =  $1.value.vali / $3.value.vali;}
-								 else 	$$.value.valf = (($1.type==INT)?$1.value.vali:$1.value.valf)/(($3.type==INT)?$3.value.vali:$3.value.valf);
-								}
+	| Exp PLUS Exp 				{}
+	| Exp MINUS Exp 			{}
+	| Exp STAR Exp 				{}
+	| Exp DIV Exp 				{}
 	| LP Exp RP 				{}
 	| MINUS Exp 				{}
 	| NOT Exp 					{}
@@ -131,8 +124,8 @@ Exp : Exp ASSIGNOP Exp 			{$$.type = $3.type; }
 	| Exp LB Exp error RB 		{printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);}
 	| Exp DOT ID 				{}
 	| ID 						{}
-	| INT 						{$$.type = INT; $$.value.vali = $1;}
-	| FLOAT 					{$$.type = FLOAT; $$.value.valf = $1;}
+	| INT 						{}
+	| FLOAT 					{}
 	;
 Args : Exp COMMA Args 	// 参数
 	| Exp

@@ -71,15 +71,20 @@
 #line 2 "CMINUS.y"
 
 #include"CMINUS.h"
+#include"tree.h"
 
 void yyerror(char *);
 int yylex();
 
 extern int yylineno;
+struct Node *cldArray[10];
+int cldN;
+int nTag;
+
 
 
 /* Line 189 of yacc.c  */
-#line 83 "CMINUS.tab.c"
+#line 88 "CMINUS.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -134,7 +139,8 @@ extern int yylineno;
      ELSE = 283,
      WHILE = 284,
      FNCT = 285,
-     ERRORA = 286
+     ERRORA = 286,
+     EPS = 287
    };
 #endif
 
@@ -145,18 +151,16 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 11 "CMINUS.y"
+#line 16 "CMINUS.y"
 
+	struct Node * val;
 	int vali;
 	float valf;
-	SYMREC *tptr;
-	int type;
-	EXPVAL expval;
 
 
 
 /* Line 214 of yacc.c  */
-#line 160 "CMINUS.tab.c"
+#line 164 "CMINUS.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -168,7 +172,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 172 "CMINUS.tab.c"
+#line 176 "CMINUS.tab.c"
 
 #ifdef short
 # undef short
@@ -386,7 +390,7 @@ union yyalloc
 #define YYLAST   216
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  32
+#define YYNTOKENS  33
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  22
 /* YYNRULES -- Number of rules.  */
@@ -396,7 +400,7 @@ union yyalloc
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   286
+#define YYMAXUTOK   287
 
 #define YYTRANSLATE(YYX)						\
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -432,7 +436,7 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    27,    28,    29,    30,    31
+      25,    26,    27,    28,    29,    30,    31,    32
 };
 
 #if YYDEBUG
@@ -452,40 +456,40 @@ static const yytype_uint8 yyprhs[] =
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      33,     0,    -1,    34,    -1,    -1,    35,    34,    -1,    37,
-      36,     6,    -1,    37,     6,    -1,    37,    42,    45,    -1,
-      41,    -1,    41,     7,    36,    -1,    18,    -1,    38,    -1,
-      25,    39,    23,    48,    24,    -1,    25,    40,    -1,    -1,
-       5,    -1,     5,    -1,     5,    -1,    41,    21,     3,    22,
-      -1,    41,    21,     3,     1,    22,    -1,     5,    19,    43,
-      20,    -1,     5,    19,    20,    -1,    44,     7,    43,    -1,
-      44,    -1,    37,    41,    -1,    23,    48,    46,    24,    -1,
-      -1,    47,    46,    -1,    52,     6,    -1,    52,     1,     6,
-      -1,    45,    -1,    26,    52,     6,    -1,    27,    19,    52,
-      20,    47,    -1,    27,    19,    52,    20,    47,    28,    47,
-      -1,    29,    19,    52,    20,    47,    -1,    -1,    49,    48,
-      -1,    37,    50,     6,    -1,    51,    -1,    51,     7,    50,
-      -1,    41,    -1,    41,     8,    52,    -1,    41,     8,     1,
-      52,    -1,    52,     8,    52,    -1,    52,    14,    52,    -1,
-      52,    15,    52,    -1,    52,     9,    52,    -1,    52,    10,
-      52,    -1,    52,    11,    52,    -1,    52,    12,    52,    -1,
-      52,    13,    52,    -1,    19,    52,    20,    -1,    11,    52,
-      -1,    16,    52,    -1,     5,    19,    53,    20,    -1,     5,
-      19,    20,    -1,    52,    21,    52,    22,    -1,    52,    21,
-      52,     1,    22,    -1,    52,    17,     5,    -1,     5,    -1,
-       3,    -1,     4,    -1,    52,     7,    53,    -1,    52,    -1
+      34,     0,    -1,    35,    -1,    -1,    36,    35,    -1,    38,
+      37,     6,    -1,    38,     6,    -1,    38,    43,    46,    -1,
+      42,    -1,    42,     7,    37,    -1,    18,    -1,    39,    -1,
+      25,    40,    23,    49,    24,    -1,    25,    41,    -1,    -1,
+       5,    -1,     5,    -1,     5,    -1,    42,    21,     3,    22,
+      -1,    42,    21,     3,     1,    22,    -1,     5,    19,    44,
+      20,    -1,     5,    19,    20,    -1,    45,     7,    44,    -1,
+      45,    -1,    38,    42,    -1,    23,    49,    47,    24,    -1,
+      -1,    48,    47,    -1,    53,     6,    -1,    53,     1,     6,
+      -1,    46,    -1,    26,    53,     6,    -1,    27,    19,    53,
+      20,    48,    -1,    27,    19,    53,    20,    48,    28,    48,
+      -1,    29,    19,    53,    20,    48,    -1,    -1,    50,    49,
+      -1,    38,    51,     6,    -1,    52,    -1,    52,     7,    51,
+      -1,    42,    -1,    42,     8,    53,    -1,    42,     8,     1,
+      53,    -1,    53,     8,    53,    -1,    53,    14,    53,    -1,
+      53,    15,    53,    -1,    53,     9,    53,    -1,    53,    10,
+      53,    -1,    53,    11,    53,    -1,    53,    12,    53,    -1,
+      53,    13,    53,    -1,    19,    53,    20,    -1,    11,    53,
+      -1,    16,    53,    -1,     5,    19,    54,    20,    -1,     5,
+      19,    20,    -1,    53,    21,    53,    22,    -1,    53,    21,
+      53,     1,    22,    -1,    53,    17,     5,    -1,     5,    -1,
+       3,    -1,     4,    -1,    53,     7,    54,    -1,    53,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    44,    44,    45,    46,    48,    49,    50,    52,    53,
-      55,    56,    58,    59,    61,    62,    64,    66,    67,    68,
-      70,    71,    73,    74,    76,    78,    80,    81,    83,    84,
-      85,    86,    87,    88,    89,    91,    92,    94,    96,    97,
-      99,   100,   101,   105,   106,   107,   108,   109,   113,   117,
-     121,   125,   126,   127,   128,   129,   130,   131,   132,   133,
-     134,   135,   137,   138
+       0,    49,    49,    50,    51,    53,    54,    55,    57,    58,
+      60,    61,    63,    64,    66,    67,    69,    71,    72,    73,
+      75,    76,    78,    79,    81,    83,    85,    86,    88,    89,
+      90,    91,    92,    93,    94,    96,    97,    99,   101,   102,
+     104,   105,   106,   110,   111,   112,   113,   114,   115,   116,
+     117,   118,   119,   120,   121,   122,   123,   124,   125,   126,
+     127,   128,   130,   131
 };
 #endif
 
@@ -497,7 +501,7 @@ static const char *const yytname[] =
   "$end", "error", "$undefined", "INT", "FLOAT", "ID", "SEMI", "COMMA",
   "ASSIGNOP", "RELOP", "PLUS", "MINUS", "STAR", "DIV", "AND", "OR", "NOT",
   "DOT", "TYPE", "LP", "RP", "LB", "RB", "LC", "RC", "STRUCT", "RETURN",
-  "IF", "ELSE", "WHILE", "FNCT", "ERRORA", "$accept", "Program",
+  "IF", "ELSE", "WHILE", "FNCT", "ERRORA", "EPS", "$accept", "Program",
   "ExtDefList", "ExtDef", "ExtDecList", "Specifier", "StructSpecifier",
   "OptTag", "Tag", "VarDec", "FunDec", "VarList", "ParamDec", "CompSt",
   "StmtList", "Stmt", "DefList", "Def", "DecList", "Dec", "Exp", "Args", 0
@@ -512,20 +516,20 @@ static const yytype_uint16 yytoknum[] =
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
      275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
-     285,   286
+     285,   286,   287
 };
 # endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    32,    33,    34,    34,    35,    35,    35,    36,    36,
-      37,    37,    38,    38,    39,    39,    40,    41,    41,    41,
-      42,    42,    43,    43,    44,    45,    46,    46,    47,    47,
-      47,    47,    47,    47,    47,    48,    48,    49,    50,    50,
-      51,    51,    51,    52,    52,    52,    52,    52,    52,    52,
-      52,    52,    52,    52,    52,    52,    52,    52,    52,    52,
-      52,    52,    53,    53
+       0,    33,    34,    35,    35,    36,    36,    36,    37,    37,
+      38,    38,    39,    39,    40,    40,    41,    42,    42,    42,
+      43,    43,    44,    44,    45,    46,    47,    47,    48,    48,
+      48,    48,    48,    48,    48,    49,    49,    50,    51,    51,
+      52,    52,    52,    53,    53,    53,    53,    53,    53,    53,
+      53,    53,    53,    53,    53,    53,    53,    53,    53,    53,
+      53,    53,    54,    54
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
@@ -655,18 +659,18 @@ static const yytype_int8 yycheck[] =
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    18,    25,    33,    34,    35,    37,    38,     5,    39,
-      40,     0,    34,     5,     6,    36,    41,    42,    23,    19,
-       6,     7,    21,    23,    45,    37,    48,    49,    20,    37,
-      43,    44,     5,    36,     3,    48,    41,    50,    51,    24,
-      48,    41,    20,     7,     1,    22,     3,     4,     5,    11,
-      16,    19,    26,    27,    29,    45,    46,    47,    52,     8,
-       6,     7,    43,    22,    19,    52,    52,    52,    52,    19,
-      19,    24,    46,     1,     6,     8,     9,    10,    11,    12,
-      13,    14,    15,    17,    21,     1,    52,    50,    20,    52,
-      53,    20,     6,    52,    52,     6,    52,    52,    52,    52,
-      52,    52,    52,    52,     5,    52,    52,     7,    20,    20,
-      20,     1,    22,    53,    47,    47,    22,    28,    47
+       0,    18,    25,    34,    35,    36,    38,    39,     5,    40,
+      41,     0,    35,     5,     6,    37,    42,    43,    23,    19,
+       6,     7,    21,    23,    46,    38,    49,    50,    20,    38,
+      44,    45,     5,    37,     3,    49,    42,    51,    52,    24,
+      49,    42,    20,     7,     1,    22,     3,     4,     5,    11,
+      16,    19,    26,    27,    29,    46,    47,    48,    53,     8,
+       6,     7,    44,    22,    19,    53,    53,    53,    53,    19,
+      19,    24,    47,     1,     6,     8,     9,    10,    11,    12,
+      13,    14,    15,    17,    21,     1,    53,    51,    20,    53,
+      54,    20,     6,    53,    53,     6,    53,    53,    53,    53,
+      53,    53,    53,    53,     5,    53,    53,     7,    20,    20,
+      20,     1,    22,    54,    48,    48,    22,    28,    48
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1480,439 +1484,427 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 44 "CMINUS.y"
+#line 49 "CMINUS.y"
     {;}
     break;
 
   case 3:
 
 /* Line 1455 of yacc.c  */
-#line 45 "CMINUS.y"
+#line 50 "CMINUS.y"
     {;}
     break;
 
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 46 "CMINUS.y"
+#line 51 "CMINUS.y"
     {;}
     break;
 
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 48 "CMINUS.y"
+#line 53 "CMINUS.y"
     {;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 49 "CMINUS.y"
+#line 54 "CMINUS.y"
     {;}
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 50 "CMINUS.y"
+#line 55 "CMINUS.y"
     {;}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 52 "CMINUS.y"
+#line 57 "CMINUS.y"
     {;}
     break;
 
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 53 "CMINUS.y"
+#line 58 "CMINUS.y"
     {;}
     break;
 
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 55 "CMINUS.y"
+#line 60 "CMINUS.y"
     {;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 56 "CMINUS.y"
+#line 61 "CMINUS.y"
     {;}
     break;
 
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 58 "CMINUS.y"
+#line 63 "CMINUS.y"
     {;}
     break;
 
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 59 "CMINUS.y"
+#line 64 "CMINUS.y"
     {;}
     break;
 
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 61 "CMINUS.y"
+#line 66 "CMINUS.y"
     {;}
     break;
 
   case 15:
 
 /* Line 1455 of yacc.c  */
-#line 62 "CMINUS.y"
+#line 67 "CMINUS.y"
     {;}
     break;
 
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 64 "CMINUS.y"
+#line 69 "CMINUS.y"
     {;}
     break;
 
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 66 "CMINUS.y"
+#line 71 "CMINUS.y"
     {;}
     break;
 
   case 18:
 
 /* Line 1455 of yacc.c  */
-#line 67 "CMINUS.y"
+#line 72 "CMINUS.y"
     {;}
     break;
 
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 68 "CMINUS.y"
+#line 73 "CMINUS.y"
     {printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);;}
     break;
 
   case 20:
 
 /* Line 1455 of yacc.c  */
-#line 70 "CMINUS.y"
+#line 75 "CMINUS.y"
     {;}
     break;
 
   case 21:
 
 /* Line 1455 of yacc.c  */
-#line 71 "CMINUS.y"
+#line 76 "CMINUS.y"
     {;}
     break;
 
   case 22:
 
 /* Line 1455 of yacc.c  */
-#line 73 "CMINUS.y"
+#line 78 "CMINUS.y"
     {;}
     break;
 
   case 23:
 
 /* Line 1455 of yacc.c  */
-#line 74 "CMINUS.y"
+#line 79 "CMINUS.y"
     {;}
     break;
 
   case 24:
 
 /* Line 1455 of yacc.c  */
-#line 76 "CMINUS.y"
+#line 81 "CMINUS.y"
     {;}
     break;
 
   case 25:
 
 /* Line 1455 of yacc.c  */
-#line 78 "CMINUS.y"
+#line 83 "CMINUS.y"
     {;}
     break;
 
   case 26:
 
 /* Line 1455 of yacc.c  */
-#line 80 "CMINUS.y"
+#line 85 "CMINUS.y"
     {/* \epsilon */;}
     break;
 
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 81 "CMINUS.y"
+#line 86 "CMINUS.y"
     {;}
     break;
 
   case 28:
 
 /* Line 1455 of yacc.c  */
-#line 83 "CMINUS.y"
+#line 88 "CMINUS.y"
     {;}
     break;
 
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 84 "CMINUS.y"
+#line 89 "CMINUS.y"
     {printf("Error Type B at Line %d: Missing \";\"\n", yylineno);;}
     break;
 
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 85 "CMINUS.y"
+#line 90 "CMINUS.y"
     {;}
     break;
 
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 86 "CMINUS.y"
+#line 91 "CMINUS.y"
     {;}
     break;
 
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 87 "CMINUS.y"
+#line 92 "CMINUS.y"
     {;}
     break;
 
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 88 "CMINUS.y"
+#line 93 "CMINUS.y"
     {;}
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 89 "CMINUS.y"
+#line 94 "CMINUS.y"
     {;}
     break;
 
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 91 "CMINUS.y"
+#line 96 "CMINUS.y"
     {;}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 92 "CMINUS.y"
+#line 97 "CMINUS.y"
     {;}
     break;
 
   case 37:
 
 /* Line 1455 of yacc.c  */
-#line 94 "CMINUS.y"
+#line 99 "CMINUS.y"
     {;}
     break;
 
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 96 "CMINUS.y"
+#line 101 "CMINUS.y"
     {;}
     break;
 
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 97 "CMINUS.y"
+#line 102 "CMINUS.y"
     {;}
     break;
 
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 99 "CMINUS.y"
+#line 104 "CMINUS.y"
     {;}
     break;
 
   case 41:
 
 /* Line 1455 of yacc.c  */
-#line 100 "CMINUS.y"
+#line 105 "CMINUS.y"
     {;}
     break;
 
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 101 "CMINUS.y"
+#line 106 "CMINUS.y"
     {;}
     break;
 
   case 43:
 
 /* Line 1455 of yacc.c  */
-#line 105 "CMINUS.y"
-    {(yyval.expval).type = (yyvsp[(3) - (3)].expval).type; ;}
+#line 110 "CMINUS.y"
+    {;}
     break;
 
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 106 "CMINUS.y"
+#line 111 "CMINUS.y"
     {;}
     break;
 
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 107 "CMINUS.y"
+#line 112 "CMINUS.y"
     {;}
     break;
 
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 108 "CMINUS.y"
+#line 113 "CMINUS.y"
     {;}
     break;
 
   case 47:
 
 /* Line 1455 of yacc.c  */
-#line 109 "CMINUS.y"
-    {(yyval.expval).type = ((yyvsp[(1) - (3)].expval).type==INT && (yyvsp[(3) - (3)].expval).type==INT)?INT:FLOAT; 
-								 if		((yyval.expval).type==INT) {(yyval.expval).value.vali =  (yyvsp[(1) - (3)].expval).value.vali + (yyvsp[(3) - (3)].expval).value.vali;}
-								 else 	(yyval.expval).value.valf = (((yyvsp[(1) - (3)].expval).type==INT)?(yyvsp[(1) - (3)].expval).value.vali:(yyvsp[(1) - (3)].expval).value.valf)+(((yyvsp[(3) - (3)].expval).type==INT)?(yyvsp[(3) - (3)].expval).value.vali:(yyvsp[(3) - (3)].expval).value.valf);
-								;}
+#line 114 "CMINUS.y"
+    {;}
     break;
 
   case 48:
 
 /* Line 1455 of yacc.c  */
-#line 113 "CMINUS.y"
-    {(yyval.expval).type = ((yyvsp[(1) - (3)].expval).type==INT && (yyvsp[(3) - (3)].expval).type==INT)?INT:FLOAT; 
-								 if		((yyval.expval).type==INT) {(yyval.expval).value.vali =  (yyvsp[(1) - (3)].expval).value.vali - (yyvsp[(3) - (3)].expval).value.vali;}
-								 else 	(yyval.expval).value.valf = (((yyvsp[(1) - (3)].expval).type==INT)?(yyvsp[(1) - (3)].expval).value.vali:(yyvsp[(1) - (3)].expval).value.valf)-(((yyvsp[(3) - (3)].expval).type==INT)?(yyvsp[(3) - (3)].expval).value.vali:(yyvsp[(3) - (3)].expval).value.valf);
-								;}
+#line 115 "CMINUS.y"
+    {;}
     break;
 
   case 49:
 
 /* Line 1455 of yacc.c  */
-#line 117 "CMINUS.y"
-    {(yyval.expval).type = ((yyvsp[(1) - (3)].expval).type==INT && (yyvsp[(3) - (3)].expval).type==INT)?INT:FLOAT; 
-								 if		((yyval.expval).type==INT) {(yyval.expval).value.vali =  (yyvsp[(1) - (3)].expval).value.vali * (yyvsp[(3) - (3)].expval).value.vali;}
-								 else 	(yyval.expval).value.valf = (((yyvsp[(1) - (3)].expval).type==INT)?(yyvsp[(1) - (3)].expval).value.vali:(yyvsp[(1) - (3)].expval).value.valf)*(((yyvsp[(3) - (3)].expval).type==INT)?(yyvsp[(3) - (3)].expval).value.vali:(yyvsp[(3) - (3)].expval).value.valf);
-								;}
+#line 116 "CMINUS.y"
+    {;}
     break;
 
   case 50:
 
 /* Line 1455 of yacc.c  */
-#line 121 "CMINUS.y"
-    {(yyval.expval).type = ((yyvsp[(1) - (3)].expval).type==INT && (yyvsp[(3) - (3)].expval).type==INT)?INT:FLOAT; 
-								 if		((yyval.expval).type==INT) {(yyval.expval).value.vali =  (yyvsp[(1) - (3)].expval).value.vali / (yyvsp[(3) - (3)].expval).value.vali;}
-								 else 	(yyval.expval).value.valf = (((yyvsp[(1) - (3)].expval).type==INT)?(yyvsp[(1) - (3)].expval).value.vali:(yyvsp[(1) - (3)].expval).value.valf)/(((yyvsp[(3) - (3)].expval).type==INT)?(yyvsp[(3) - (3)].expval).value.vali:(yyvsp[(3) - (3)].expval).value.valf);
-								;}
+#line 117 "CMINUS.y"
+    {;}
     break;
 
   case 51:
 
 /* Line 1455 of yacc.c  */
-#line 125 "CMINUS.y"
+#line 118 "CMINUS.y"
     {;}
     break;
 
   case 52:
 
 /* Line 1455 of yacc.c  */
-#line 126 "CMINUS.y"
+#line 119 "CMINUS.y"
     {;}
     break;
 
   case 53:
 
 /* Line 1455 of yacc.c  */
-#line 127 "CMINUS.y"
+#line 120 "CMINUS.y"
     {;}
     break;
 
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 128 "CMINUS.y"
+#line 121 "CMINUS.y"
     {;}
     break;
 
   case 55:
 
 /* Line 1455 of yacc.c  */
-#line 129 "CMINUS.y"
+#line 122 "CMINUS.y"
     {;}
     break;
 
   case 56:
 
 /* Line 1455 of yacc.c  */
-#line 130 "CMINUS.y"
+#line 123 "CMINUS.y"
     {;}
     break;
 
   case 57:
 
 /* Line 1455 of yacc.c  */
-#line 131 "CMINUS.y"
+#line 124 "CMINUS.y"
     {printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);;}
     break;
 
   case 58:
 
 /* Line 1455 of yacc.c  */
-#line 132 "CMINUS.y"
+#line 125 "CMINUS.y"
     {;}
     break;
 
   case 59:
 
 /* Line 1455 of yacc.c  */
-#line 133 "CMINUS.y"
+#line 126 "CMINUS.y"
     {;}
     break;
 
   case 60:
 
 /* Line 1455 of yacc.c  */
-#line 134 "CMINUS.y"
-    {(yyval.expval).type = INT; (yyval.expval).value.vali = (yyvsp[(1) - (1)].vali);;}
+#line 127 "CMINUS.y"
+    {;}
     break;
 
   case 61:
 
 /* Line 1455 of yacc.c  */
-#line 135 "CMINUS.y"
-    {(yyval.expval).type = FLOAT; (yyval.expval).value.valf = (yyvsp[(1) - (1)].valf);;}
+#line 128 "CMINUS.y"
+    {;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 1916 "CMINUS.tab.c"
+#line 1908 "CMINUS.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2124,7 +2116,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 140 "CMINUS.y"
+#line 133 "CMINUS.y"
 
 
 

@@ -67,7 +67,8 @@
      ELSE = 283,
      WHILE = 284,
      FNCT = 285,
-     ERRORA = 286
+     ERRORA = 286,
+     EPS = 287
    };
 #endif
 
@@ -78,18 +79,16 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 11 "CMINUS.y"
+#line 16 "CMINUS.y"
 
+	struct Node * val;
 	int vali;
 	float valf;
-	SYMREC *tptr;
-	int type;
-	EXPVAL expval;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 93 "CMINUS.tab.h"
+#line 92 "CMINUS.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
