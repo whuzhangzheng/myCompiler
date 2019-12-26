@@ -21,27 +21,27 @@ int nTag;
 
 %token <vali>INT 					// 258
 %token <valf>FLOAT					// 259
-%token  ID						// 260
-%token  SEMI COMMA 				// 261 262	
-%token  ASSIGNOP	
-%token  RELOP					// 我觉得这个得展开，但暂时忽略	
-%token  PLUS MINUS STAR DIV		// 265
-%token  AND OR NOT
-%token  DOT
-%token  TYPE
-%token  LP RP
-%token  LB RB
-%token  LC RC
-%token  STRUCT
-%token  RETURN
-%token  IF ELSE
-%token  WHILE
-%token FNCT
-%token ERRORA;
+%token <val>ID						// 260
+%token <val>SEMI COMMA 				// 261 262	
+%token <val>ASSIGNOP	
+%token <val>RELOP					// 我觉得这个得展开，但暂时忽略	
+%token <val>PLUS MINUS STAR DIV		// 265
+%token <val>AND OR NOT
+%token <val>DOT
+%token <val>TYPE
+%token <val>LP RP
+%token <val>LB RB
+%token <val>LC RC
+%token <val>STRUCT
+%token <val>RETURN
+%token <val>IF ELSE
+%token <val>WHILE
+%token <val>FNCT
+%token <val>ERRORA;
 
-%token  EPS
+%token <val>EPS
 
-%type <expval> Exp
+%type <val> Exp
 
 
 %%

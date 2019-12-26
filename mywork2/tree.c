@@ -8,7 +8,7 @@ struct Node* createLeaf(int tag, char *text){
 	struct Node *nd=(struct Node*)malloc(sizeof(struct Node));
 	nd->ncld=0;
 	nd->tag=tag;
-	if(tag==ID || tag==FLOAT || tag==INT)
+	if(tag==ID || tag==TYPE)
 	{
 		nd->value=(char*)malloc(sizeof(char)*strlen(text));
 		strcpy(nd->value,text);

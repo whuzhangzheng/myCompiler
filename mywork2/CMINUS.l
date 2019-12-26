@@ -3,10 +3,13 @@
 %{
 #include"CMINUS.h"
 #include"CMINUS.tab.h"
+#include"tree.h"
+
 int base8ConverTo10(int);
 int base16ConverTo10(char *);
 float readFloat(char *);
 //extern int error;
+
 
 %}
 
@@ -26,7 +29,8 @@ float readFloat(char *);
 \.[0-9]+[eE][+-]?[0-9]+				{yylval.valf = readFloat(yytext); return FLOAT;}
 
  /*¹Ø¼ü×Ö*/
-"int"|"float"		{return TYPE;}
+"int"				{yylval.val = createLeaf(TYPE, yytext); 	return TYPE;}
+"float"				{yylval.val = createLeaf(TYPE, yytext);		return TYPE;}
 "struct"			{return STRUCT;}
 "return"			{return RETURN;}
 "if"				{return IF;}
@@ -34,18 +38,18 @@ float readFloat(char *);
 "while"				{return WHILE;}
 
  /*ID*/
-[a-zA-Z_][a-zA-Z_0-9]*				{return ID;}
+[a-zA-Z_][a-zA-Z_0-9]*				{yylval.val = createLeaf(TYPE, yytext);	return ID;}
 
  /*±êµã·ûºÅ*/
-";"				{return SEMI;}
-","				{return COMMA;}
-"."				{return DOT;}
-"("				{return LP;}
-")"				{return RP;}
-"["				{return LB;}
-"]"				{return RB;}
-"{"				{return LC;}
-"}"				{return RC;}
+";"				{yylval.val = createLeaf(SEMI, ""); return SEMI;}
+","				{yylval.val = createLeaf(SEMI, "");	return COMMA;}
+"."				{yylval.val = createLeaf(SEMI, "");	return DOT;}
+"("				{yylval.val = createLeaf(SEMI, "");	return LP;}
+")"				{yylval.val = createLeaf(SEMI, "");	return RP;}
+"["				{yylval.val = createLeaf(SEMI, "");	return LB;}
+"]"				{yylval.val = createLeaf(SEMI, "");	return RB;}
+"{"				{yylval.val = createLeaf(SEMI, "");	return LC;}
+"}"				{yylval.val = createLeaf(SEMI, "");	return RC;}
 
  /*¸³Öµ·ûºÅ*/
 "="				{return ASSIGNOP;}
