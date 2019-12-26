@@ -6,6 +6,8 @@ struct Node
  
     struct Node *cld[10];
     int ncld;
+	
+	int lineno;
 };
 
 //typedef struct Node_ Node;

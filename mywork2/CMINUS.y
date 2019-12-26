@@ -15,12 +15,10 @@ int nTag;
 
 %union{
 	struct Node * val;
-	int vali;
-	float valf;
 }
 
-%token <vali>INT 					// 258
-%token <valf>FLOAT					// 259
+%token <val>INT 					// 258
+%token <val>FLOAT					// 259
 %token <val>ID						// 260
 %token <val>SEMI COMMA 				// 261 262	
 %token <val>ASSIGNOP	
@@ -47,7 +45,7 @@ int nTag;
 %%
 
 Program : ExtDefList 			{nTag=PROGRAM; cldN=1; cldArray[0]=$1; $$=createNode(nTag, cldN, cldArray); treePrint($$);}
-ExtDefList :	/*定义列表*/	{}
+ExtDefList :	/*定义列表*/	{$$=NULL;}
 	| ExtDef ExtDefList 		{nTag=EXTDEFLIST; cldN=2; cldArray[0]=$1; cldArray[1]=$2;
 								$$=createNode(nTag, cldN, cldArray); }
 	;	 
@@ -170,10 +168,10 @@ Exp : Exp ASSIGNOP Exp 			{nTag=EXP; cldN=3; cldArray[0]=$1; cldArray[1]=$2;	cld
 								$$=createNode(nTag, cldN, cldArray); }
 	| ID 						{nTag=EXP; cldN=1; cldArray[0]=$1; 
 								$$=createNode(nTag, cldN, cldArray); }
-	| INT 						{nTag=EXP; 
-								$$=createLeaf(nTag, "int"); }
-	| FLOAT 					{nTag=EXP;  
-								$$=createLeaf(nTag, "float"); }
+	| INT 						{nTag=EXP; cldN=1; cldArray[0]=$1; 
+								$$=createNode(nTag, cldN, cldArray); }
+	| FLOAT 					{nTag=EXP; cldN=1; cldArray[0]=$1; 
+								$$=createNode(nTag, cldN, cldArray); }
 	;
 Args : Exp COMMA Args 			{nTag=ARGS; cldN=3; cldArray[0]=$1; cldArray[1]=$2;	cldArray[2]=$3; 
 								$$=createNode(nTag, cldN, cldArray); }

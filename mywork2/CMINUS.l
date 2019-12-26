@@ -8,6 +8,8 @@
 int base8ConverTo10(int);
 int base16ConverTo10(char *);
 float readFloat(char *);
+int vali;
+float valf;
 //extern int error;
 
 
@@ -19,14 +21,14 @@ float readFloat(char *);
 
 
  /* 对整数的支持(包括8进制和16进制)*/
-0				{yylval.vali = 0; return INT;}
-[1-9][0-9]*		{yylval.vali = atoi(yytext); return INT; }
-0[1-9][0-9]*	{yylval.vali = base8ConverTo10(atoi(yytext)); return INT;}
-0[xX][0-9a-fA-F]*	{yylval.vali = base16ConverTo10(yytext); return INT;}
+0				{vali = 0; 				yylval.val = createLeaf(INT, yytext); return INT;}
+[1-9][0-9]*		{vali = atoi(yytext);	yylval.val = createLeaf(INT, yytext);	return INT; }
+0[1-9][0-9]*	{vali = base8ConverTo10(atoi(yytext)); yylval.val = createLeaf(INT, yytext); return INT;}
+0[xX][0-9a-fA-F]*	{vali = base16ConverTo10(yytext); yylval.val = createLeaf(INT, yytext);return INT;}
  /* 浮点数的支持*/
-[0-9]+\.[0-9]+						{yylval.valf = readFloat(yytext); return FLOAT;}
+[0-9]+\.[0-9]+						{valf = readFloat(yytext); 			yylval.val = createLeaf(FLOAT, yytext); return FLOAT;}
 [0-9]+\.[0-9]*[eE][+-]?[0-9]+	|
-\.[0-9]+[eE][+-]?[0-9]+				{yylval.valf = readFloat(yytext); return FLOAT;}
+\.[0-9]+[eE][+-]?[0-9]+				{valf = readFloat(yytext); 	yylval.val = createLeaf(FLOAT, yytext); return FLOAT;}
 
  /*关键字*/
 "int"				{yylval.val = createLeaf(TYPE, yytext); 	return TYPE;}
@@ -38,35 +40,35 @@ float readFloat(char *);
 "while"				{return WHILE;}
 
  /*ID*/
-[a-zA-Z_][a-zA-Z_0-9]*				{yylval.val = createLeaf(TYPE, yytext);	return ID;}
+[a-zA-Z_][a-zA-Z_0-9]*				{yylval.val = createLeaf(ID, yytext);	return ID;}
 
  /*标点符号*/
 ";"				{yylval.val = createLeaf(SEMI, ""); return SEMI;}
-","				{yylval.val = createLeaf(SEMI, "");	return COMMA;}
-"."				{yylval.val = createLeaf(SEMI, "");	return DOT;}
-"("				{yylval.val = createLeaf(SEMI, "");	return LP;}
-")"				{yylval.val = createLeaf(SEMI, "");	return RP;}
-"["				{yylval.val = createLeaf(SEMI, "");	return LB;}
-"]"				{yylval.val = createLeaf(SEMI, "");	return RB;}
-"{"				{yylval.val = createLeaf(SEMI, "");	return LC;}
-"}"				{yylval.val = createLeaf(SEMI, "");	return RC;}
+","				{yylval.val = createLeaf(COMMA, "");	return COMMA;}
+"."				{yylval.val = createLeaf(DOT, "");	return DOT;}
+"("				{yylval.val = createLeaf(LP, "");	return LP;}
+")"				{yylval.val = createLeaf(RP, "");	return RP;}
+"["				{yylval.val = createLeaf(LB, "");	return LB;}
+"]"				{yylval.val = createLeaf(RB, "");	return RB;}
+"{"				{yylval.val = createLeaf(LC, "");	return LC;}
+"}"				{yylval.val = createLeaf(RC, "");	return RC;}
 
  /*赋值符号*/
-"="				{return ASSIGNOP;}
+"="				{yylval.val = createLeaf(ASSIGNOP, "");return ASSIGNOP;}
 
  /*比较运算符*/
-[><]|">="|"<="|"=="	{return RELOP;}
+[><]|">="|"<="|"=="	{yylval.val = createLeaf(RELOP, yytext); return RELOP;}
 
  /*算术运算符*/
-"+"				{ return PLUS; }
-"-"				{ return MINUS; }
-"*"				{ return STAR; }
-"/"				{ return DIV; }
+"+"				{yylval.val = createLeaf(PLUS, ""); return PLUS; }
+"-"				{yylval.val = createLeaf(MINUS, ""); return MINUS; }
+"*"				{yylval.val = createLeaf(STAR, ""); return STAR; }
+"/"				{yylval.val = createLeaf(DIV, ""); return DIV; }
 
  /*逻辑运算符*/
-"&&"			{return AND;}
-"||"			{return OR;}
-"!"				{return NOT;}
+"&&"			{yylval.val = createLeaf(AND, ""); return AND;}
+"||"			{yylval.val = createLeaf(OR, ""); return OR;}
+"!"				{yylval.val = createLeaf(NOT, "");return NOT;}
 
 \n				{}
 

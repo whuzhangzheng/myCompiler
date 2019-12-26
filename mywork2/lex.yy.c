@@ -455,10 +455,12 @@ char *yytext;
 int base8ConverTo10(int);
 int base16ConverTo10(char *);
 float readFloat(char *);
+int vali;
+float valf;
 //extern int error;
 
 
-#line 462 "lex.yy.c"
+#line 464 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -609,10 +611,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 16 "CMINUS.l"
+#line 18 "CMINUS.l"
 
  /*忽略空白符*/
-#line 616 "lex.yy.c"
+#line 618 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -705,196 +707,196 @@ do_action:	/* This label is used only to access EOF actions. */
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 18 "CMINUS.l"
+#line 20 "CMINUS.l"
 {}
 	YY_BREAK
 /* 对整数的支持(包括8进制和16进制)*/
 case 2:
 YY_RULE_SETUP
-#line 22 "CMINUS.l"
-{yylval.vali = 0; return INT;}
+#line 24 "CMINUS.l"
+{vali = 0; 				yylval.val = createLeaf(INT, yytext); return INT;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 23 "CMINUS.l"
-{yylval.vali = atoi(yytext); return INT; }
+#line 25 "CMINUS.l"
+{vali = atoi(yytext);	yylval.val = createLeaf(INT, yytext);	return INT; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 24 "CMINUS.l"
-{yylval.vali = base8ConverTo10(atoi(yytext)); return INT;}
+#line 26 "CMINUS.l"
+{vali = base8ConverTo10(atoi(yytext)); yylval.val = createLeaf(INT, yytext); return INT;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 25 "CMINUS.l"
-{yylval.vali = base16ConverTo10(yytext); return INT;}
+#line 27 "CMINUS.l"
+{vali = base16ConverTo10(yytext); yylval.val = createLeaf(INT, yytext);return INT;}
 	YY_BREAK
 /* 浮点数的支持*/
 case 6:
 YY_RULE_SETUP
-#line 27 "CMINUS.l"
-{yylval.valf = readFloat(yytext); return FLOAT;}
+#line 29 "CMINUS.l"
+{valf = readFloat(yytext); 			yylval.val = createLeaf(FLOAT, yytext); return FLOAT;}
 	YY_BREAK
 case 7:
-#line 29 "CMINUS.l"
+#line 31 "CMINUS.l"
 case 8:
 YY_RULE_SETUP
-#line 29 "CMINUS.l"
-{yylval.valf = readFloat(yytext); return FLOAT;}
+#line 31 "CMINUS.l"
+{valf = readFloat(yytext); 	yylval.val = createLeaf(FLOAT, yytext); return FLOAT;}
 	YY_BREAK
 /*关键字*/
 case 9:
 YY_RULE_SETUP
-#line 32 "CMINUS.l"
+#line 34 "CMINUS.l"
 {yylval.val = createLeaf(TYPE, yytext); 	return TYPE;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 33 "CMINUS.l"
+#line 35 "CMINUS.l"
 {yylval.val = createLeaf(TYPE, yytext);		return TYPE;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 34 "CMINUS.l"
+#line 36 "CMINUS.l"
 {return STRUCT;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 35 "CMINUS.l"
+#line 37 "CMINUS.l"
 {return RETURN;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 36 "CMINUS.l"
+#line 38 "CMINUS.l"
 {return IF;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 37 "CMINUS.l"
+#line 39 "CMINUS.l"
 {return ELSE;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 38 "CMINUS.l"
+#line 40 "CMINUS.l"
 {return WHILE;}
 	YY_BREAK
 /*ID*/
 case 16:
 YY_RULE_SETUP
-#line 41 "CMINUS.l"
-{yylval.val = createLeaf(TYPE, yytext);	return ID;}
+#line 43 "CMINUS.l"
+{yylval.val = createLeaf(ID, yytext);	return ID;}
 	YY_BREAK
 /*标点符号*/
 case 17:
 YY_RULE_SETUP
-#line 44 "CMINUS.l"
+#line 46 "CMINUS.l"
 {yylval.val = createLeaf(SEMI, ""); return SEMI;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 45 "CMINUS.l"
-{yylval.val = createLeaf(SEMI, "");	return COMMA;}
+#line 47 "CMINUS.l"
+{yylval.val = createLeaf(COMMA, "");	return COMMA;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 46 "CMINUS.l"
-{yylval.val = createLeaf(SEMI, "");	return DOT;}
+#line 48 "CMINUS.l"
+{yylval.val = createLeaf(DOT, "");	return DOT;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 47 "CMINUS.l"
-{yylval.val = createLeaf(SEMI, "");	return LP;}
+#line 49 "CMINUS.l"
+{yylval.val = createLeaf(LP, "");	return LP;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 48 "CMINUS.l"
-{yylval.val = createLeaf(SEMI, "");	return RP;}
+#line 50 "CMINUS.l"
+{yylval.val = createLeaf(RP, "");	return RP;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 49 "CMINUS.l"
-{yylval.val = createLeaf(SEMI, "");	return LB;}
+#line 51 "CMINUS.l"
+{yylval.val = createLeaf(LB, "");	return LB;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 50 "CMINUS.l"
-{yylval.val = createLeaf(SEMI, "");	return RB;}
+#line 52 "CMINUS.l"
+{yylval.val = createLeaf(RB, "");	return RB;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 51 "CMINUS.l"
-{yylval.val = createLeaf(SEMI, "");	return LC;}
+#line 53 "CMINUS.l"
+{yylval.val = createLeaf(LC, "");	return LC;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 52 "CMINUS.l"
-{yylval.val = createLeaf(SEMI, "");	return RC;}
+#line 54 "CMINUS.l"
+{yylval.val = createLeaf(RC, "");	return RC;}
 	YY_BREAK
 /*赋值符号*/
 case 26:
 YY_RULE_SETUP
-#line 55 "CMINUS.l"
-{return ASSIGNOP;}
+#line 57 "CMINUS.l"
+{yylval.val = createLeaf(ASSIGNOP, "");return ASSIGNOP;}
 	YY_BREAK
 /*比较运算符*/
 case 27:
 YY_RULE_SETUP
-#line 58 "CMINUS.l"
-{return RELOP;}
+#line 60 "CMINUS.l"
+{yylval.val = createLeaf(RELOP, yytext); return RELOP;}
 	YY_BREAK
 /*算术运算符*/
 case 28:
 YY_RULE_SETUP
-#line 61 "CMINUS.l"
-{ return PLUS; }
+#line 63 "CMINUS.l"
+{yylval.val = createLeaf(PLUS, ""); return PLUS; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 62 "CMINUS.l"
-{ return MINUS; }
+#line 64 "CMINUS.l"
+{yylval.val = createLeaf(MINUS, ""); return MINUS; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 63 "CMINUS.l"
-{ return STAR; }
+#line 65 "CMINUS.l"
+{yylval.val = createLeaf(STAR, ""); return STAR; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 64 "CMINUS.l"
-{ return DIV; }
+#line 66 "CMINUS.l"
+{yylval.val = createLeaf(DIV, ""); return DIV; }
 	YY_BREAK
 /*逻辑运算符*/
 case 32:
 YY_RULE_SETUP
-#line 67 "CMINUS.l"
-{return AND;}
+#line 69 "CMINUS.l"
+{yylval.val = createLeaf(AND, ""); return AND;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 68 "CMINUS.l"
-{return OR;}
+#line 70 "CMINUS.l"
+{yylval.val = createLeaf(OR, ""); return OR;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 69 "CMINUS.l"
-{return NOT;}
+#line 71 "CMINUS.l"
+{yylval.val = createLeaf(NOT, "");return NOT;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 71 "CMINUS.l"
+#line 73 "CMINUS.l"
 {}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 73 "CMINUS.l"
+#line 75 "CMINUS.l"
 {printf("Error type A at Line %d:Mysterious character %c\n", yylineno, yytext[0]); return 1;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 74 "CMINUS.l"
+#line 76 "CMINUS.l"
 YY_FATAL_ERROR( "flex scanner jammed" );
 	YY_BREAK
-#line 898 "lex.yy.c"
+#line 900 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1778,7 +1780,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 74 "CMINUS.l"
+#line 76 "CMINUS.l"
 
 
 /*

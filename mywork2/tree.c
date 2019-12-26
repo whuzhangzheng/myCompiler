@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+extern int yylineno;
 struct Node* createLeaf(int tag, char *text){
 	struct Node *nd=(struct Node*)malloc(sizeof(struct Node));
 	nd->ncld=0;
@@ -27,6 +28,7 @@ struct Node *createNode(int tag, int ncld, struct Node *a[])
 	nd->value=NULL;
 	for(i=0; i<nd->ncld; i++)
 		(nd->cld)[i]=a[i];
+	nd->lineno = yylineno;
 	return nd;
 }
 
@@ -47,10 +49,11 @@ void treePrintLevel(struct Node *nd, int lvl)
 	{
 		for(i=0; i<2*lvl; i++)
 			printf(" ");
-		
-		if(nd->value==NULL)
+		if(nd->ncld !=0)			// 非叶子节点
+			printf("%s(%d)\n", getTag(nd->tag), nd->lineno);
+		else if(nd->value==NULL )	// 叶子节点，且没有节点值
 			printf("%s\n", getTag(nd->tag));
-		else 
+		else 						// 叶子节点，有节点值
 			printf("%s:%s\n", getTag(nd->tag), nd->value);
 		
 		for (i=0; i<nd->ncld; i++) {  
@@ -78,7 +81,7 @@ char * getTag(int tag){
 		case FUNDEC : return "FunDec";
 		case VARLIST : return "VarList";
 		case PARAMDEC : return "ParamDec";
-		case COMPST : return "COMPST";
+		case COMPST : return "CompSt";
 		case STMTLIST : return "StmtList";
 		case STMT : return "Stmt";
 		case DEFLIST : return "DefList";

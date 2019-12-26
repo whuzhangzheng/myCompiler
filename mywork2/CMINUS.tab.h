@@ -82,13 +82,11 @@ typedef union YYSTYPE
 #line 16 "CMINUS.y"
 
 	struct Node * val;
-	int vali;
-	float valf;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 92 "CMINUS.tab.h"
+#line 90 "CMINUS.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
