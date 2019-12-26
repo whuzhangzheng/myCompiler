@@ -13,6 +13,3 @@ CMINUS.fb: CMINUS.l CMINUS.y tree.h tree.c
 	@bison -d CMINUS.y
 	@flex CMINUS.l
 	gcc CMINUS.tab.c lex.yy.c tree.c -lfl -Llibs/ -o CMINUS
-mcalc: calc.h main.c mcalc.y scanner.c
-	bison mcalc.y -d -t
-	gcc mcalc.tab.c main.c scanner.c -lfl -Llibs/ -o mcalc

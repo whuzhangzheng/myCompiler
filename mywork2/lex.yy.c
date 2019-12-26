@@ -457,7 +457,7 @@ int base16ConverTo10(char *);
 float readFloat(char *);
 int vali;
 float valf;
-//extern int error;
+extern int ifError;
 
 
 #line 464 "lex.yy.c"
@@ -889,7 +889,7 @@ YY_RULE_SETUP
 case 36:
 YY_RULE_SETUP
 #line 75 "CMINUS.l"
-{printf("Error type A at Line %d:Mysterious character %c\n", yylineno, yytext[0]); return 1;}
+{ifError=1; printf("Error type A at Line %d:Mysterious character %c\n", yylineno, yytext[0]); return 1;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP

@@ -10,7 +10,7 @@ int base16ConverTo10(char *);
 float readFloat(char *);
 int vali;
 float valf;
-//extern int error;
+extern int ifError;
 
 
 %}
@@ -72,7 +72,7 @@ float valf;
 
 \n				{}
 
-.				{printf("Error type A at Line %d:Mysterious character %c\n", yylineno, yytext[0]); return 1;}
+.				{ifError=1; printf("Error type A at Line %d:Mysterious character %c\n", yylineno, yytext[0]); return 1;}
 %%
 
 /*

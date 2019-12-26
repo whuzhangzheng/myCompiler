@@ -11,6 +11,7 @@ struct Node *cldArray[10];
 int cldN;
 int nTag;
 
+int ifError = 0;
 %}
 
 %union{
@@ -44,7 +45,8 @@ int nTag;
 
 %%
 
-Program : ExtDefList 			{nTag=PROGRAM; cldN=1; cldArray[0]=$1; $$=createNode(nTag, cldN, cldArray); treePrint($$);}
+Program : ExtDefList 			{nTag=PROGRAM; cldN=1; cldArray[0]=$1; $$=createNode(nTag, cldN, cldArray); 
+								if(!ifError) treePrint($$);}
 ExtDefList :	/*定义列表*/	{$$=NULL;}
 	| ExtDef ExtDefList 		{nTag=EXTDEFLIST; cldN=2; cldArray[0]=$1; cldArray[1]=$2;
 								$$=createNode(nTag, cldN, cldArray); }
@@ -103,7 +105,7 @@ Stmt : Exp SEMI 				{nTag=STMT; cldN=2; cldArray[0]=$1; cldArray[1]=$2;
 								$$=createNode(nTag, cldN, cldArray); }
 	| Exp error SEMI 			{nTag=STMT; cldN=2; cldArray[0]=$1; cldArray[1]=$3;	
 								$$=createNode(nTag, cldN, cldArray);
-								printf("Error Type B at Line %d: Missing \";\"\n", yylineno);}
+								printf("Error Type B at Line %d: Missing \";\"\n", yylineno); ifError=1;}
 	| CompSt 					{nTag=STMT; cldN=1; cldArray[0]=$1; $$=createNode(nTag, cldN, cldArray);}
 	| RETURN Exp SEMI 			{nTag=STMT; cldN=3; cldArray[0]=$1; cldArray[1]=$2;	cldArray[2]=$3; 
 								$$=createNode(nTag, cldN, cldArray); }
@@ -163,7 +165,7 @@ Exp : Exp ASSIGNOP Exp 			{nTag=EXP; cldN=3; cldArray[0]=$1; cldArray[1]=$2;	cld
 								$$=createNode(nTag, cldN, cldArray); }
 	| Exp LB Exp error RB 		{nTag=EXP; cldN=4; cldArray[0]=$1; cldArray[1]=$2;	cldArray[2]=$3;  cldArray[3]=$5; 
 								$$=createNode(nTag, cldN, cldArray); 
-								printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);}
+								printf("Error Type B at Line %d: Missing \"]\"\n", yylineno); ifError=1; }
 	| Exp DOT ID 				{nTag=EXP; cldN=3; cldArray[0]=$1; cldArray[1]=$2;	cldArray[2]=$3; 
 								$$=createNode(nTag, cldN, cldArray); }
 	| ID 						{nTag=EXP; cldN=1; cldArray[0]=$1; 
