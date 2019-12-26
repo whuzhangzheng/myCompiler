@@ -483,13 +483,13 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    49,    49,    50,    51,    53,    54,    55,    57,    58,
-      60,    61,    63,    64,    66,    67,    69,    71,    72,    73,
-      75,    76,    78,    79,    81,    83,    85,    86,    88,    89,
-      90,    91,    92,    93,    94,    96,    97,    99,   101,   102,
-     104,   105,   106,   110,   111,   112,   113,   114,   115,   116,
-     117,   118,   119,   120,   121,   122,   123,   124,   125,   126,
-     127,   128,   130,   131
+       0,    49,    49,    50,    51,    54,    56,    58,    61,    62,
+      65,    66,    68,    70,    73,    74,    76,    78,    79,    81,
+      85,    87,    90,    92,    94,    97,   100,   101,   104,   106,
+     109,   110,   112,   114,   117,   120,   121,   123,   126,   127,
+     130,   131,   133,   138,   140,   142,   144,   146,   148,   150,
+     152,   154,   156,   158,   160,   162,   164,   166,   169,   171,
+     173,   175,   178,   180
 };
 #endif
 
@@ -1485,7 +1485,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 49 "CMINUS.y"
-    {;}
+    {nTag=PROGRAM; cldN=1; cldArray[0]=(yyvsp[(1) - (1)].val); (yyval.val)=createNode(nTag, cldN, cldArray); treePrint((yyval.val));;}
     break;
 
   case 3:
@@ -1499,412 +1499,476 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 51 "CMINUS.y"
-    {;}
+    {nTag=EXTDEFLIST; cldN=2; cldArray[0]=(yyvsp[(1) - (2)].val); cldArray[1]=(yyvsp[(2) - (2)].val);
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 53 "CMINUS.y"
-    {;}
+#line 54 "CMINUS.y"
+    {nTag=EXTDEF; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val); cldArray[2]=(yyvsp[(3) - (3)].val);
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 54 "CMINUS.y"
-    {;}
+#line 56 "CMINUS.y"
+    {nTag=EXTDEF; cldN=2; cldArray[0]=(yyvsp[(1) - (2)].val); cldArray[1]=(yyvsp[(2) - (2)].val);
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 55 "CMINUS.y"
-    {;}
+#line 58 "CMINUS.y"
+    {nTag=EXTDEF; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val);
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 57 "CMINUS.y"
-    {;}
+#line 61 "CMINUS.y"
+    {nTag=EXTDECLIST; cldN=1; cldArray[0]=(yyvsp[(1) - (1)].val); (yyval.val)=createNode(nTag, cldN, cldArray);;}
     break;
 
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 58 "CMINUS.y"
-    {;}
+#line 62 "CMINUS.y"
+    {nTag=EXTDECLIST; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val);
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 60 "CMINUS.y"
-    {;}
+#line 65 "CMINUS.y"
+    {nTag=SPECIFIER; cldN=1; cldArray[0]=(yyvsp[(1) - (1)].val); (yyval.val)=createNode(nTag, cldN, cldArray);;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 61 "CMINUS.y"
-    {;}
+#line 66 "CMINUS.y"
+    {nTag=SPECIFIER; cldN=1; cldArray[0]=(yyvsp[(1) - (1)].val); (yyval.val)=createNode(nTag, cldN, cldArray);;}
     break;
 
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 63 "CMINUS.y"
-    {;}
+#line 68 "CMINUS.y"
+    {nTag=STRUCTSPECIFIER; cldN=5; cldArray[0]=(yyvsp[(1) - (5)].val); cldArray[1]=(yyvsp[(2) - (5)].val);	cldArray[2]=(yyvsp[(3) - (5)].val); cldArray[3]=(yyvsp[(4) - (5)].val); cldArray[4]=(yyvsp[(5) - (5)].val);
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 13:
 
 /* Line 1455 of yacc.c  */
-#line 64 "CMINUS.y"
-    {;}
+#line 70 "CMINUS.y"
+    {nTag=STRUCTSPECIFIER; cldN=2; cldArray[0]=(yyvsp[(1) - (2)].val); cldArray[1]=(yyvsp[(2) - (2)].val);	
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 66 "CMINUS.y"
-    {;}
+#line 73 "CMINUS.y"
+    {(yyval.val)=NULL;;}
     break;
 
   case 15:
 
 /* Line 1455 of yacc.c  */
-#line 67 "CMINUS.y"
-    {;}
+#line 74 "CMINUS.y"
+    {nTag=OPTTAG; cldN=1; cldArray[0]=(yyvsp[(1) - (1)].val); (yyval.val)=createNode(nTag, cldN, cldArray);;}
     break;
 
   case 16:
 
 /* Line 1455 of yacc.c  */
-#line 69 "CMINUS.y"
-    {;}
+#line 76 "CMINUS.y"
+    {nTag=TAG; cldN=1; cldArray[0]=(yyvsp[(1) - (1)].val); (yyval.val)=createNode(nTag, cldN, cldArray);;}
     break;
 
   case 17:
 
 /* Line 1455 of yacc.c  */
-#line 71 "CMINUS.y"
-    {;}
+#line 78 "CMINUS.y"
+    {nTag=VARDEC; cldN=1; cldArray[0]=(yyvsp[(1) - (1)].val); (yyval.val)=createNode(nTag, cldN, cldArray);;}
     break;
 
   case 18:
 
 /* Line 1455 of yacc.c  */
-#line 72 "CMINUS.y"
-    {;}
+#line 79 "CMINUS.y"
+    {nTag=VARDEC; cldN=4; cldArray[0]=(yyvsp[(1) - (4)].val); cldArray[1]=(yyvsp[(2) - (4)].val);	cldArray[2]=(yyvsp[(3) - (4)].vali); cldArray[3]=(yyvsp[(4) - (4)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 73 "CMINUS.y"
-    {printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);;}
+#line 81 "CMINUS.y"
+    {nTag=VARDEC; cldN=4; cldArray[0]=(yyvsp[(1) - (5)].val); cldArray[1]=(yyvsp[(2) - (5)].val);	cldArray[2]=(yyvsp[(3) - (5)].vali);  cldArray[3]=(yyvsp[(5) - (5)].val);
+									(yyval.val)=createNode(nTag, cldN, cldArray); 
+									printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);;}
     break;
 
   case 20:
 
 /* Line 1455 of yacc.c  */
-#line 75 "CMINUS.y"
-    {;}
+#line 85 "CMINUS.y"
+    {nTag=FUNDEC; cldN=4; cldArray[0]=(yyvsp[(1) - (4)].val); cldArray[1]=(yyvsp[(2) - (4)].val);	cldArray[2]=(yyvsp[(3) - (4)].val); cldArray[3]=(yyvsp[(4) - (4)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 21:
 
 /* Line 1455 of yacc.c  */
-#line 76 "CMINUS.y"
-    {;}
+#line 87 "CMINUS.y"
+    {nTag=FUNDEC; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 22:
 
 /* Line 1455 of yacc.c  */
-#line 78 "CMINUS.y"
-    {;}
+#line 90 "CMINUS.y"
+    {nTag=VARLIST; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 23:
 
 /* Line 1455 of yacc.c  */
-#line 79 "CMINUS.y"
-    {;}
+#line 92 "CMINUS.y"
+    {nTag=VARLIST; cldN=1; cldArray[0]=(yyvsp[(1) - (1)].val); (yyval.val)=createNode(nTag, cldN, cldArray);;}
     break;
 
   case 24:
 
 /* Line 1455 of yacc.c  */
-#line 81 "CMINUS.y"
-    {;}
+#line 94 "CMINUS.y"
+    {nTag=PARAMDEC; cldN=2; cldArray[0]=(yyvsp[(1) - (2)].val); cldArray[1]=(yyvsp[(2) - (2)].val);	
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 25:
 
 /* Line 1455 of yacc.c  */
-#line 83 "CMINUS.y"
-    {;}
+#line 97 "CMINUS.y"
+    {nTag=COMPST; cldN=4; cldArray[0]=(yyvsp[(1) - (4)].val); cldArray[1]=(yyvsp[(2) - (4)].val);	cldArray[2]=(yyvsp[(3) - (4)].val); cldArray[3]=(yyvsp[(4) - (4)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 26:
 
 /* Line 1455 of yacc.c  */
-#line 85 "CMINUS.y"
-    {/* \epsilon */;}
+#line 100 "CMINUS.y"
+    {(yyval.val)=NULL;;}
     break;
 
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 86 "CMINUS.y"
-    {;}
+#line 101 "CMINUS.y"
+    {nTag=STMTLIST; cldN=2; cldArray[0]=(yyvsp[(1) - (2)].val); cldArray[1]=(yyvsp[(2) - (2)].val);	
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 28:
 
 /* Line 1455 of yacc.c  */
-#line 88 "CMINUS.y"
-    {;}
+#line 104 "CMINUS.y"
+    {nTag=STMT; cldN=2; cldArray[0]=(yyvsp[(1) - (2)].val); cldArray[1]=(yyvsp[(2) - (2)].val);	
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 89 "CMINUS.y"
-    {printf("Error Type B at Line %d: Missing \";\"\n", yylineno);;}
+#line 106 "CMINUS.y"
+    {nTag=STMT; cldN=2; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(3) - (3)].val);	
+								(yyval.val)=createNode(nTag, cldN, cldArray);
+								printf("Error Type B at Line %d: Missing \";\"\n", yylineno);;}
     break;
 
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 90 "CMINUS.y"
-    {;}
+#line 109 "CMINUS.y"
+    {nTag=STMT; cldN=1; cldArray[0]=(yyvsp[(1) - (1)].val); (yyval.val)=createNode(nTag, cldN, cldArray);;}
     break;
 
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 91 "CMINUS.y"
-    {;}
+#line 110 "CMINUS.y"
+    {nTag=STMT; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 92 "CMINUS.y"
-    {;}
+#line 112 "CMINUS.y"
+    {nTag=STMT; cldN=5; cldArray[0]=(yyvsp[(1) - (5)].val); cldArray[1]=(yyvsp[(2) - (5)].val);	cldArray[2]=(yyvsp[(3) - (5)].val); cldArray[3]=(yyvsp[(4) - (5)].val); cldArray[4]=(yyvsp[(5) - (5)].val);
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 93 "CMINUS.y"
-    {;}
+#line 114 "CMINUS.y"
+    {nTag=STMT; cldN=7; cldArray[0]=(yyvsp[(1) - (7)].val); cldArray[1]=(yyvsp[(2) - (7)].val);	cldArray[2]=(yyvsp[(3) - (7)].val); cldArray[3]=(yyvsp[(4) - (7)].val); cldArray[4]=(yyvsp[(5) - (7)].val);
+									cldArray[5]=(yyvsp[(6) - (7)].val);cldArray[6]=(yyvsp[(7) - (7)].val);
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 94 "CMINUS.y"
-    {;}
+#line 117 "CMINUS.y"
+    {nTag=STMT; cldN=5; cldArray[0]=(yyvsp[(1) - (5)].val); cldArray[1]=(yyvsp[(2) - (5)].val);	cldArray[2]=(yyvsp[(3) - (5)].val); cldArray[3]=(yyvsp[(4) - (5)].val); cldArray[4]=(yyvsp[(5) - (5)].val);
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 96 "CMINUS.y"
-    {;}
+#line 120 "CMINUS.y"
+    {(yyval.val)=NULL;;}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 97 "CMINUS.y"
-    {;}
+#line 121 "CMINUS.y"
+    {nTag=DEFLIST; cldN=2; cldArray[0]=(yyvsp[(1) - (2)].val); cldArray[1]=(yyvsp[(2) - (2)].val); (yyval.val)=createNode(nTag, cldN, cldArray);	;}
     break;
 
   case 37:
 
 /* Line 1455 of yacc.c  */
-#line 99 "CMINUS.y"
-    {;}
+#line 123 "CMINUS.y"
+    {nTag=DEF; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 101 "CMINUS.y"
-    {;}
+#line 126 "CMINUS.y"
+    {nTag=DECLIST; cldN=1; cldArray[0]=(yyvsp[(1) - (1)].val); (yyval.val)=createNode(nTag, cldN, cldArray);;}
     break;
 
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 102 "CMINUS.y"
-    {;}
+#line 127 "CMINUS.y"
+    {nTag=DECLIST; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 104 "CMINUS.y"
-    {;}
+#line 130 "CMINUS.y"
+    {nTag=DEC; cldN=1; cldArray[0]=(yyvsp[(1) - (1)].val); (yyval.val)=createNode(nTag, cldN, cldArray);;}
     break;
 
   case 41:
 
 /* Line 1455 of yacc.c  */
-#line 105 "CMINUS.y"
-    {;}
+#line 131 "CMINUS.y"
+    {nTag=DEC; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 106 "CMINUS.y"
-    {;}
+#line 133 "CMINUS.y"
+    {nTag=DEC; cldN=3; cldArray[0]=(yyvsp[(1) - (4)].val); cldArray[1]=(yyvsp[(2) - (4)].val);	cldArray[2]=(yyvsp[(4) - (4)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 43:
 
 /* Line 1455 of yacc.c  */
-#line 110 "CMINUS.y"
-    {;}
+#line 138 "CMINUS.y"
+    {nTag=EXP; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 111 "CMINUS.y"
-    {;}
+#line 140 "CMINUS.y"
+    {nTag=EXP; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 112 "CMINUS.y"
-    {;}
+#line 142 "CMINUS.y"
+    {nTag=EXP; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 113 "CMINUS.y"
-    {;}
+#line 144 "CMINUS.y"
+    {nTag=EXP; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 47:
 
 /* Line 1455 of yacc.c  */
-#line 114 "CMINUS.y"
-    {;}
+#line 146 "CMINUS.y"
+    {nTag=EXP; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 48:
 
 /* Line 1455 of yacc.c  */
-#line 115 "CMINUS.y"
-    {;}
+#line 148 "CMINUS.y"
+    {nTag=EXP; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 49:
 
 /* Line 1455 of yacc.c  */
-#line 116 "CMINUS.y"
-    {;}
+#line 150 "CMINUS.y"
+    {nTag=EXP; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 50:
 
 /* Line 1455 of yacc.c  */
-#line 117 "CMINUS.y"
-    {;}
+#line 152 "CMINUS.y"
+    {nTag=EXP; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 51:
 
 /* Line 1455 of yacc.c  */
-#line 118 "CMINUS.y"
-    {;}
+#line 154 "CMINUS.y"
+    {nTag=EXP; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 52:
 
 /* Line 1455 of yacc.c  */
-#line 119 "CMINUS.y"
-    {;}
+#line 156 "CMINUS.y"
+    {nTag=EXP; cldN=2; cldArray[0]=(yyvsp[(1) - (2)].val); cldArray[1]=(yyvsp[(2) - (2)].val);	
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 53:
 
 /* Line 1455 of yacc.c  */
-#line 120 "CMINUS.y"
-    {;}
+#line 158 "CMINUS.y"
+    {nTag=EXP; cldN=2; cldArray[0]=(yyvsp[(1) - (2)].val); cldArray[1]=(yyvsp[(2) - (2)].val);	
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 121 "CMINUS.y"
-    {;}
+#line 160 "CMINUS.y"
+    {nTag=EXP; cldN=4; cldArray[0]=(yyvsp[(1) - (4)].val); cldArray[1]=(yyvsp[(2) - (4)].val);	cldArray[2]=(yyvsp[(3) - (4)].val); cldArray[3]=(yyvsp[(4) - (4)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 55:
 
 /* Line 1455 of yacc.c  */
-#line 122 "CMINUS.y"
-    {;}
+#line 162 "CMINUS.y"
+    {nTag=EXP; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 56:
 
 /* Line 1455 of yacc.c  */
-#line 123 "CMINUS.y"
-    {;}
+#line 164 "CMINUS.y"
+    {nTag=EXP; cldN=4; cldArray[0]=(yyvsp[(1) - (4)].val); cldArray[1]=(yyvsp[(2) - (4)].val);	cldArray[2]=(yyvsp[(3) - (4)].val);  cldArray[3]=(yyvsp[(4) - (4)].val);  
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 57:
 
 /* Line 1455 of yacc.c  */
-#line 124 "CMINUS.y"
-    {printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);;}
+#line 166 "CMINUS.y"
+    {nTag=EXP; cldN=4; cldArray[0]=(yyvsp[(1) - (5)].val); cldArray[1]=(yyvsp[(2) - (5)].val);	cldArray[2]=(yyvsp[(3) - (5)].val);  cldArray[3]=(yyvsp[(5) - (5)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); 
+								printf("Error Type B at Line %d: Missing \"]\"\n", yylineno);;}
     break;
 
   case 58:
 
 /* Line 1455 of yacc.c  */
-#line 125 "CMINUS.y"
-    {;}
+#line 169 "CMINUS.y"
+    {nTag=EXP; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 59:
 
 /* Line 1455 of yacc.c  */
-#line 126 "CMINUS.y"
-    {;}
+#line 171 "CMINUS.y"
+    {nTag=EXP; cldN=1; cldArray[0]=(yyvsp[(1) - (1)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 60:
 
 /* Line 1455 of yacc.c  */
-#line 127 "CMINUS.y"
-    {;}
+#line 173 "CMINUS.y"
+    {nTag=EXP; 
+								(yyval.val)=createLeaf(nTag, "int"); ;}
     break;
 
   case 61:
 
 /* Line 1455 of yacc.c  */
-#line 128 "CMINUS.y"
-    {;}
+#line 175 "CMINUS.y"
+    {nTag=EXP;  
+								(yyval.val)=createLeaf(nTag, "float"); ;}
+    break;
+
+  case 62:
+
+/* Line 1455 of yacc.c  */
+#line 178 "CMINUS.y"
+    {nTag=ARGS; cldN=3; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(2) - (3)].val);	cldArray[2]=(yyvsp[(3) - (3)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
+    break;
+
+  case 63:
+
+/* Line 1455 of yacc.c  */
+#line 180 "CMINUS.y"
+    {nTag=ARGS; cldN=1; cldArray[0]=(yyvsp[(1) - (1)].val); 
+								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 1908 "CMINUS.tab.c"
+#line 1972 "CMINUS.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2116,7 +2180,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 133 "CMINUS.y"
+#line 183 "CMINUS.y"
 
 
 
