@@ -72,7 +72,7 @@
 
 #include"CMINUS.h"
 #include"tree.h"
-
+int yyrestart(FILE*f);
 void yyerror(char *);
 int yylex();
 
@@ -1684,7 +1684,7 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 104 "CMINUS.y"
     {nTag=STMT; cldN=2; cldArray[0]=(yyvsp[(1) - (2)].val); cldArray[1]=(yyvsp[(2) - (2)].val);	
-								(yyval.val)=createNode(nTag, cldN, cldArray); ;}
+						(yyval.val)=createNode(nTag, cldN, cldArray); ;}
     break;
 
   case 29:
@@ -1692,8 +1692,8 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 106 "CMINUS.y"
     {nTag=STMT; cldN=2; cldArray[0]=(yyvsp[(1) - (3)].val); cldArray[1]=(yyvsp[(3) - (3)].val);	
-								(yyval.val)=createNode(nTag, cldN, cldArray);
-								printf("Error Type B at Line %d: Missing \";\"\n", yylineno); ifError=1;;}
+						(yyval.val)=createNode(nTag, cldN, cldArray);
+						printf("Error Type B at Line %d: Missing \";\"\n", yylineno); ifError=1;;}
     break;
 
   case 30:

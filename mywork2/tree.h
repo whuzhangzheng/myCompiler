@@ -1,19 +1,17 @@
 
 struct Node
 {
-    int tag;
-    char* value;
- 
-    struct Node *cld[10];
-    int ncld;
-	
-	int lineno;
+    int tag;					// 节点类型
+    char* value;				// 节点值，主要针对id，type
+    struct Node *childs[10];	// 子节点
+    int nchilds;				// 	子节点个数
+	int lineno;					// 行号
 };
 
 //typedef struct Node_ Node;
 
 struct Node *createLeaf(int tag, char *text);
-struct Node *createNode(int tag, int ncld, struct Node *a[]);
+struct Node *createNode(int tag, int nchilds, struct Node *a[]);
 struct Node *createEmpty();
 void treePrint(struct Node * nd);
 char * getTag(int tag);

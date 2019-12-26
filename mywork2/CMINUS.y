@@ -2,7 +2,7 @@
 %{
 #include"CMINUS.h"
 #include"tree.h"
-
+int yyrestart(FILE*f);
 void yyerror(char *);
 int yylex();
 
@@ -101,11 +101,11 @@ StmtList : 						{$$=NULL;}
 	| Stmt StmtList 			{nTag=STMTLIST; cldN=2; cldArray[0]=$1; cldArray[1]=$2;	
 								$$=createNode(nTag, cldN, cldArray); }
 	;
-Stmt : Exp SEMI 				{nTag=STMT; cldN=2; cldArray[0]=$1; cldArray[1]=$2;	
-								$$=createNode(nTag, cldN, cldArray); }
-	| Exp error SEMI 			{nTag=STMT; cldN=2; cldArray[0]=$1; cldArray[1]=$3;	
-								$$=createNode(nTag, cldN, cldArray);
-								printf("Error Type B at Line %d: Missing \";\"\n", yylineno); ifError=1;}
+Stmt : Exp SEMI 		{nTag=STMT; cldN=2; cldArray[0]=$1; cldArray[1]=$2;	
+						$$=createNode(nTag, cldN, cldArray); }
+	| Exp error SEMI	{nTag=STMT; cldN=2; cldArray[0]=$1; cldArray[1]=$3;	
+						$$=createNode(nTag, cldN, cldArray);
+						printf("Error Type B at Line %d: Missing \";\"\n", yylineno); ifError=1;}
 	| CompSt 					{nTag=STMT; cldN=1; cldArray[0]=$1; $$=createNode(nTag, cldN, cldArray);}
 	| RETURN Exp SEMI 			{nTag=STMT; cldN=3; cldArray[0]=$1; cldArray[1]=$2;	cldArray[2]=$3; 
 								$$=createNode(nTag, cldN, cldArray); }

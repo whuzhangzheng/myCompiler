@@ -7,7 +7,7 @@
 extern int yylineno;
 struct Node* createLeaf(int tag, char *text){
 	struct Node *nd=(struct Node*)malloc(sizeof(struct Node));
-	nd->ncld=0;
+	nd->nchilds=0;
 	nd->tag=tag;
 	if(tag==ID || tag==TYPE)
 	{
@@ -19,15 +19,15 @@ struct Node* createLeaf(int tag, char *text){
 	return nd;
 }
 
-struct Node *createNode(int tag, int ncld, struct Node *a[])
+struct Node *createNode(int tag, int nchilds, struct Node *a[])
 {
 	int i;
 	struct Node *nd=(struct Node*)malloc(sizeof(struct Node));
-	nd->ncld=ncld;
+	nd->nchilds=nchilds;
 	nd->tag=tag;
 	nd->value=NULL;
-	for(i=0; i<nd->ncld; i++)
-		(nd->cld)[i]=a[i];
+	for(i=0; i<nd->nchilds; i++)
+		(nd->childs)[i]=a[i];
 	nd->lineno = yylineno;
 	return nd;
 }
@@ -36,7 +36,7 @@ struct Node *createNode(int tag, int ncld, struct Node *a[])
 struct Node *createEmpty()
 {
 	struct Node *nd=(struct Node*)malloc(sizeof(struct Node));
-	nd->ncld=0;
+	nd->nchilds=0;
 	nd->tag=EPS;
 	nd->value=NULL;
  
@@ -49,15 +49,15 @@ void treePrintLevel(struct Node *nd, int lvl)
 	{
 		for(i=0; i<2*lvl; i++)
 			printf(" ");
-		if(nd->ncld !=0)			// 非叶子节点
+		if(nd->nchilds !=0)			// 非叶子节点
 			printf("%s(%d)\n", getTag(nd->tag), nd->lineno);
 		else if(nd->value==NULL )	// 叶子节点，且没有节点值
 			printf("%s\n", getTag(nd->tag));
 		else 						// 叶子节点，有节点值
 			printf("%s:%s\n", getTag(nd->tag), nd->value);
 		
-		for (i=0; i<nd->ncld; i++) {  
-			treePrintLevel((nd->cld)[i], lvl+1);
+		for (i=0; i<nd->nchilds; i++) {  
+			treePrintLevel((nd->childs)[i], lvl+1);
 		}
 	}
 }
