@@ -87,7 +87,34 @@ char * getTag(int tag){
 		case DEC : return "Dec";
 		case EXP : return "Exp";
 		case ARGS : return "Args";
-		case TYPE: return "Type";
+		case INT : return "INT"	;				// 258
+        case FLOAT	: return "FLOAT";				// 259
+        case ID		: return "ID";			// 260
+        case SEMI:	return "SEMI";
+		case COMMA : return "COMMA"	;		// 261 262	
+        case ASSIGNOP: return "ASSIGNOP";
+        case RELOP	: return "RELOP";			// 我觉得这个得展开，但暂时忽略	
+        case PLUS :		return "PLUS";
+		case MINUS:		return "MINUS";
+		case STAR :		return "STAR";
+		case DIV  :		return "DIV";
+        case AND  :		return "AND";
+		case OR   :		return "OR";
+		case NOT  :		return "NOT";
+        case DOT  :		return "DOT";
+        case TYPE :		return "TYPE";
+        case LP   :		return "LP";
+		case RP	  :		return "RP";
+        case LB   :		return "LB";
+		case RB   :		return "RB";
+        case LC   :		return "LC";
+		case RC   :		return "RC";
+        case STRUCT	:	return "STRUCT";
+        case RETURN	:	return "RETURN";
+        case IF 	:	return "IF";
+		case ELSE	:	return "ELSE";
+        case WHILE	:	return "WHILE";
+        case FNCT	:	return "FNCT";
 		default: return "";
 	}
 }
